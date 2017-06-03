@@ -722,7 +722,8 @@ public int tp_internal_init(atmi_lib_conf_t *init_data)
     }
 
     /* format the name of ndrxd queue: */
-    sprintf(G_atmi_tls->G_atmi_conf.ndrxd_q_str, NDRX_NDRXD, 
+    snprintf(G_atmi_tls->G_atmi_conf.ndrxd_q_str, 
+            sizeof(G_atmi_tls->G_atmi_conf.ndrxd_q_str), NDRX_NDRXD, 
             G_atmi_tls->G_atmi_conf.q_prefix);
     NDRX_LOG(log_debug, "NDRXD queue: [%s]", G_atmi_tls->G_atmi_conf.ndrxd_q_str);
     
@@ -824,7 +825,7 @@ public int tpinit (TPINIT * init_data)
     }
     else
     {
-        strcpy(conf.q_prefix, p);
+        NDRX_STRCPY_SAFE(conf.q_prefix, p);
         NDRX_LOG(log_debug, "Got prefix [%s]", conf.q_prefix);
         
     }
@@ -832,7 +833,7 @@ public int tpinit (TPINIT * init_data)
     /* Get the PID of the process */
     pid = getpid();
     
-    strcpy(read_clt_name, EX_PROGNAME);
+    NDRX_STRCPY_SAFE(read_clt_name, EX_PROGNAME);
     NDRX_LOG(log_debug, "Got PROGNAME [%s]", read_clt_name);
     
     /* Get new context id. Threading support only for clients... */
@@ -842,23 +843,23 @@ public int tpinit (TPINIT * init_data)
     /* Format my ID */
     if (FAIL==G_srv_id)
     {
-        sprintf(my_id, NDRX_MY_ID_CLT, 
+        snprintf(my_id, sizeof(my_id), NDRX_MY_ID_CLT, 
                 init_data!=NULL?init_data->cltname:read_clt_name, 
                 pid, 
                 conf.contextid, 
                 G_atmi_env.our_nodeid);
         
-        strcpy(conf.my_id, my_id);
+        NDRX_STRCPY_SAFE(conf.my_id, my_id);
     }
     else
     {
-        sprintf(my_id, NDRX_MY_ID_SRV, 
+        snprintf(my_id, sizeof(my_id), NDRX_MY_ID_SRV, 
                 init_data!=NULL?init_data->cltname:read_clt_name, 
                 G_srv_id, 
                 pid,
                 conf.contextid, /* Bug #119 server multicontext fixes... */
                 G_atmi_env.our_nodeid);
-        strcpy(conf.my_id, my_id);
+        NDRX_STRCPY_SAFE(conf.my_id, my_id);
     }
 
     NDRX_LOG(log_debug, "my_id=[%s]", conf.my_id);
@@ -869,7 +870,7 @@ public int tpinit (TPINIT * init_data)
     /* at first try to un-link existing queue */
     ndrx_mq_unlink(reply_q);
 
-    strcpy(conf.reply_q_str, reply_q);
+    NDRX_STRCPY_SAFE(conf.reply_q_str, reply_q);
     /* now try to open the queue, by default we will have blocked access */
     conf.reply_q = ndrx_mq_open_at(reply_q, O_RDONLY | O_CREAT, S_IWUSR | S_IRUSR, NULL);
     if ((mqd_t)FAIL==conf.reply_q)
