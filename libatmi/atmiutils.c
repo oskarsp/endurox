@@ -268,9 +268,9 @@ out:
  * @param flags
  * @return 
  */
-public int generic_q_send(char *queue, char *data, long len, long flags)
+public int generic_q_send(char *queue, char *data, long len, long flags, unsigned int msg_prio)
 {
-    return generic_q_send_2(queue, data, len, flags, FAIL);
+    return generic_q_send_2(queue, data, len, flags, FAIL, msg_prio);
 }
 
 /**
@@ -280,10 +280,12 @@ public int generic_q_send(char *queue, char *data, long len, long flags)
  * @param svc
  * @param data
  * @param len
- * @tout - time-out in seconds.
- * @return
+ * @param tout - time-out in seconds.
+ * @param msg_prio - message priority see, NDRX_MSGPRIO_*
+ * @return SUCCEED/FAIL
  */
-public int generic_q_send_2(char *queue, char *data, long len, long flags, long tout)
+public int generic_q_send_2(char *queue, char *data, long len, long flags, 
+        long tout, unsigned int msg_prio)
 {
     int ret=SUCCEED;
     mqd_t q_descr=(mqd_t)FAIL;
@@ -507,7 +509,7 @@ public int cmd_generic_call_2(int ndrxd_cmd, int msg_src, int msg_type,
         {
             NDRX_LOG(log_info, "Sending data to [%s] call flags=0x%x", 
                                     admin_q_str, call->flags);
-            if (SUCCEED!=generic_q_send(admin_q_str, (char *)call, call_size, flags))
+            if (SUCCEED!=generic_q_send(admin_q_str, (char *)call, call_size, flags, 0))
             {
                 if (NULL!=p_put_output)
                     p_put_output("Failed to send msg to ndrxd!");
@@ -840,7 +842,7 @@ public int reply_with_failure(long flags, tp_command_call_t *last_call,
 
     if (NULL==buf)
     {
-        if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, sizeof(*call), flags)))
+        if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, sizeof(*call), flags, 0)))
         {
             NDRX_LOG(log_error, "%s: Failed to send error reply back, os err: %s", fn, strerror(ret));
             goto out;
@@ -978,7 +980,7 @@ public void ndrx_reply_with_failure(tp_command_call_t *tp_call, long flags,
     NDRX_LOG(log_error, "Dumping error reply about to send:");
     ndrx_dump_call_struct(log_error, &call);
 
-    if (SUCCEED!=(ret=generic_q_send(tp_call->reply_to, (char *)&call, sizeof(call), flags)))
+    if (SUCCEED!=(ret=generic_q_send(tp_call->reply_to, (char *)&call, sizeof(call), flags, 0)))
     {
         NDRX_LOG(log_error, "%s: Failed to send error reply back, os err: %s", fn, strerror(ret));
     }
@@ -1347,3 +1349,37 @@ public void ndrx_myid_dump(int lev, TPMYID *p_myid, char *msg)
             
 }
 
+/**
+ * Translate the given my_id to reply q
+ * This should work for servers and clients.
+ * The rply Q is built locally...
+ * 
+ * @param my_id String version of my_id
+ * @param rply_q String version (full version with pfx) of the reply Q
+ */
+public int ndrx_myid_translate_to_q(TPMYID *p_myid, char *rply_q, int rply_q_buflen)
+{
+    int ret = SUCCEED;
+    
+    /* Now build the reply Qs */
+    if (TPMYIDTYP_SERVER==p_myid->tpmyidtyp)
+    {
+        /* build server q */
+        /*#define NDRX_SVR_QREPLY   "%s,srv,reply,%s,%d,%d"  qpfx, procname, serverid, pid */
+        snprintf(rply_q, rply_q_buflen, NDRX_SVR_QREPLY, G_atmi_env.qprefix, 
+                p_myid->binary_name, p_myid->srv_id, p_myid->pid);
+        
+    }
+    else
+    {
+        /* build client q */
+        /*#define NDRX_CLT_QREPLY   "%s,clt,reply,%s,%d,%ld"  pfx, name, pid, context id*/
+        snprintf(rply_q, rply_q_buflen, NDRX_CLT_QREPLY, G_atmi_env.qprefix, 
+                p_myid->binary_name, p_myid->pid, p_myid->contextid);
+    }
+    
+    NDRX_LOG(log_info, "Translated into [%s] reply q", rply_q);
+    
+out:
+    return ret;
+}

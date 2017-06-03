@@ -34,16 +34,17 @@ extern "C" {
 #define TPSENDONLY	0x00000800
 #define TPRECVONLY	0x00001000
 #define TPACK		0x00002000
-#define TPTRANSUSPEND	0x00040000	/* Suspend current transaction */
+#define TPTRANSUSPEND	0x00040000	/* Suspend current transaction          */
 #define TPSOFTTIMEOUT	0x00080000	/* Soft timout condition -> ret TPETIME */
-#define TPSOFTENOENT    0x00100000	/* Simulate that service is not found */
-#define TPNOAUTBUF      0x00200000	/* Don't restore autbuf in srv context */
-#define RESERVED_BIT1   0x00400000  /* RFU, tux compatiblity */
+#define TPSOFTENOENT    0x00100000	/* Simulate that service is not found   */
+#define TPNOAUTBUF      0x00200000	/* Don't restore autbuf in srv context  */
+#define RESERVED_BIT1   0x00400000      /* RFU, tux compatiblity */
+#define TPREGEXMATCH    0x00800000      /* Use regular expressoins for match    */
 
-#define TPEVSERVICE	    0x00000001
+#define TPEVSERVICE	0x00000001
 #define TPEVQUEUE       0x00000002 /* RFU */
 #define TPEVTRAN        0x00000004 /* RFU */
-#define TPEVPERSIST	    0x00000008
+#define TPEVPERSIST	0x00000008
 
 #define NDRX_XID_SERIAL_BUFSIZE     48 /* Serialized size (base64) xid */
 #define NDRX_MAX_RMS                32  /* Number of resource managers supported */
@@ -96,11 +97,14 @@ extern "C" {
 
 #define NDRX_ADMIN_FMT_PFX "%s,srv,admin," /* Prefix for sanity check. */
 
-#define NDRX_SVR_QREPLY   "%s,srv,reply,%s,%d,%d"
+#define NDRX_SVR_QREPLY   "%s,srv,reply,%s,%d,%d" /* qpfx, procname, serverid, pid */
 #define NDRX_SVR_QREPLY_PFX "%s,srv,reply," /* Prefix for sanity check. */
 
 /* this may end up in "112233-" if client is not properly initialised */
-#define NDRX_CLT_QREPLY   "%s,clt,reply,%s,%d,%ld"
+/* NOTE: Myid contains also node_id, the client Q does not contain it
+ * as it is local
+ */
+#define NDRX_CLT_QREPLY   "%s,clt,reply,%s,%d,%ld" /* pfx, name, pid, context id*/
 #define NDRX_CLT_QREPLY_PFX   "%s,clt,reply," /* Prefix for sanity check */
 #define NDRX_CLT_QREPLY_CHK   ",clt,reply," /* (verify that it is reply q) */
 
@@ -413,7 +417,7 @@ extern "C" {
 /* client/caller identifier */
 struct clientid_t
 {
-    char    clientdata[NDRX_MAX_ID_SIZE];          
+    char    clientdata[NDRX_MAX_ID_SIZE];
 };
 typedef struct clientid_t CLIENTID;
 

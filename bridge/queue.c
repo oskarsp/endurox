@@ -201,7 +201,7 @@ public int br_submit_to_ndrxd(command_call_t *call, int len, in_msg_t* from_q)
     int ret=SUCCEED;
     
     if (SUCCEED!=(ret=generic_q_send(ndrx_get_G_atmi_conf()->ndrxd_q_str, 
-            (char *)call, len, TPNOBLOCK)))
+            (char *)call, len, TPNOBLOCK, 0)))
     {
         NDRX_LOG(log_error, "Failed to send message to ndrxd!");
         br_process_error((char *)call, len, ret, from_q, PACK_TYPE_TONDRXD);
@@ -245,7 +245,7 @@ public int br_submit_to_service(tp_command_call_t *call, int len, in_msg_t* from
     }
     
     NDRX_LOG(log_debug, "Calling service: %s", svc_q);
-    if (SUCCEED!=(ret=generic_q_send(svc_q, (char *)call, len, TPNOBLOCK)))
+    if (SUCCEED!=(ret=generic_q_send(svc_q, (char *)call, len, TPNOBLOCK, 0)))
     {
         NDRX_LOG(log_error, "Failed to send message to ndrxd!");
         br_process_error((char *)call, len, ret, from_q, PACK_TYPE_TOSVC);
@@ -274,7 +274,7 @@ public int br_submit_reply_to_q(tp_command_call_t *call, int len, in_msg_t* from
     }
     
     NDRX_LOG(log_debug, "Reply to Q: %s", reply_to);
-    if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, len, TPNOBLOCK)))
+    if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, len, TPNOBLOCK, 0)))
     {
         NDRX_LOG(log_error, "Failed to send message to %s!", reply_to);
         br_process_error((char *)call, len, ret, from_q, PACK_TYPE_TORPLYQ);

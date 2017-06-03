@@ -283,6 +283,9 @@ public void * ndrx_atmi_tls_new(int auto_destroy, int auto_set)
     tls->global_tx_suspended = FALSE;
     memset(&tls->G_atmi_xa_curtx, 0, sizeof(tls->G_atmi_xa_curtx));
     
+    /* unsol msgs */
+    tls->p_unsol_handler = NULL;
+    
     pthread_mutex_init(&tls->mutex, NULL);
     
     /* set callback, when thread dies, we need to get the destructor 

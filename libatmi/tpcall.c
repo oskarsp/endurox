@@ -371,7 +371,7 @@ public void cancel_if_expected(tp_command_call_t *call)
     }
 }
 /**
- * Do asynchronus call.
+ * Do asynchronous call.
  * If it is evpost (is_evpost) htne extradata must be loaded with `my_id' from then
  * server. We will parse it out get the target queue message must be put!
  * 
@@ -421,7 +421,7 @@ public int _tpacall (char *svc, char *data,
             int tmp_is_bridge;
             char tmpsvc[MAXTIDENT+1];
             
-            sprintf(tmpsvc, NDRX_SVC_BRIDGE, dest_node);
+            snprintf(tmpsvc, sizeof(tmpsvc), NDRX_SVC_BRIDGE, dest_node);
 
             if (SUCCEED!=ndrx_shm_get_svc(tmpsvc, send_q, &tmp_is_bridge))
             {
@@ -431,9 +431,9 @@ public int _tpacall (char *svc, char *data,
             }
         }
 #else
-        sprintf(send_q, NDRX_SVC_QBRDIGE, G_atmi_tls->G_atmi_conf.q_prefix, dest_node);
+        snprintf(send_q, sizeof(send_q), NDRX_SVC_QBRDIGE, 
+                G_atmi_tls->G_atmi_conf.q_prefix, dest_node);
 #endif
-        
         is_bridge=TRUE;
     }
     else if (ex_flags & TPCALL_EVPOST)
@@ -442,10 +442,9 @@ public int _tpacall (char *svc, char *data,
         {
             NDRX_LOG(log_error, "%s: Cannot get send Q for server: [%s]", 
                     fn, extradata);
-            ret=FAIL;
             _TPset_error_fmt(TPENOENT, "%s: Cannot get send Q for server: [%s]", 
                     fn, extradata);
-            goto out;
+            FAIL_OUT(ret);
         }
     }
     else if (SUCCEED!=ndrx_shm_get_svc(svc, send_q, &is_bridge))
@@ -460,11 +459,10 @@ public int _tpacall (char *svc, char *data,
 
     if (NULL!=data)
     {
-        if (NULL==(buffer_info = find_buffer(data)))
+        if (NULL==(buffer_info = ndrx_find_buffer(data)))
         {
             _TPset_error_fmt(TPEINVAL, "Buffer %p not known to system!", fn);
-            ret=FAIL;
-            goto out;
+            FAIL_OUT(ret);
         }
     }
 
@@ -472,11 +470,11 @@ public int _tpacall (char *svc, char *data,
     {
         descr = &G_buf_descr[buffer_info->type_id];
         /* prepare buffer for call */
-        if (SUCCEED!=descr->pf_prepare_outgoing(descr, data, len, call->data, &data_len, flags))
+        if (SUCCEED!=descr->pf_prepare_outgoing(descr, data, len, call->data, 
+                &data_len, flags))
         {
             /* not good - error should be already set */
-            ret=FAIL;
-            goto out;
+            FAIL_OUT(ret);
         }
     }
     else
@@ -494,7 +492,7 @@ public int _tpacall (char *svc, char *data,
     else
         call->buffer_type_id = buffer_info->type_id;
 
-    strcpy(call->reply_to, G_atmi_tls->G_atmi_conf.reply_q_str);
+    NDRX_STRCPY_SAFE(call->reply_to, G_atmi_tls->G_atmi_conf.reply_q_str);
     if (!(ex_flags & TPCALL_EVPOST))
     {
         call->command_id = ATMI_COMMAND_TPCALL;
@@ -510,7 +508,7 @@ public int _tpacall (char *svc, char *data,
     
     if (NULL!=extradata)
     {
-        strcpy(call->extradata, extradata);
+        NDRX_STRCPY_SAFE(call->extradata, extradata);
     }
 
     timestamp = time(NULL);
@@ -557,13 +555,13 @@ public int _tpacall (char *svc, char *data,
     /* Reset call timer */
     ndrx_timer_reset(&call->timer);
     
-    strcpy(call->my_id, G_atmi_tls->G_atmi_conf.my_id); /* Setup my_id */
+    NDRX_STRCPY_SAFE(call->my_id, G_atmi_tls->G_atmi_conf.my_id); /* Setup my_id */
     NDRX_LOG(log_debug, "Sending request to: [%s] my_id=[%s] reply_to=[%s] cd=%d callseq=%u", 
             send_q, call->my_id, call->reply_to, tpcall_cd, call->callseq);
     
     NDRX_DUMP(log_dump, "Sending away...", (char *)call, data_len);
 
-    if (SUCCEED!=(ret=generic_q_send(send_q, (char *)call, data_len, flags)))
+    if (SUCCEED!=(ret=generic_q_send(send_q, (char *)call, data_len, flags, 0)))
     {
         int err;
 
@@ -704,6 +702,18 @@ public int _tpgetrply (int *cd,
         }
         else
         {
+            
+            if (ATMI_COMMAND_TPNOTIFY==rply->command_id ||
+                    ATMI_COMMAND_BROADCAST==rply->command_id)
+            {
+                NDRX_LOG(log_debug, "%s message received -> _tpnotify", 
+                        (ATMI_COMMAND_TPNOTIFY==rply->command_id?"Notification":"Broadcast"));
+                /* process the notif... */
+                ndrx_process_notif(rply_buf, rply_len);
+                
+                /* And continue... */
+                continue;
+            }
             NDRX_LOG(log_debug, "accept any: %s", (flags & TPGETANY)?"yes":"no" );
 
             /* if answer is not expected, then we receive again! */
@@ -729,7 +739,6 @@ public int _tpgetrply (int *cd,
                 answ_ok=TRUE;
                 /* Free up call descriptor!! */
                 unlock_call_descriptor(rply->cd, CALL_NOT_ISSUED);
-                
             }
             else
             {
@@ -972,7 +981,7 @@ public int _get_evpost_sendq(char *send_q, char *extradata)
     
     send_q[0] = EOS;
     
-    strcpy(tmp, extradata);
+    NDRX_STRCPY_SAFE(tmp, extradata);
     
     len = strlen(extradata);
     
@@ -1016,13 +1025,15 @@ public int _get_evpost_sendq(char *send_q, char *extradata)
             }
         }
 #else
-        sprintf(send_q, NDRX_SVC_QBRDIGE, G_atmi_tls->G_atmi_conf.q_prefix, nodeid);
+        snprintf(send_q, sizeof(send_q), NDRX_SVC_QBRDIGE, 
+                G_atmi_tls->G_atmi_conf.q_prefix, nodeid);
 #endif
     }
     else
     {
         NDRX_LOG(log_debug, "This is local server");
-        sprintf(send_q, NDRX_ADMIN_FMT, G_atmi_tls->G_atmi_conf.q_prefix, binary, srvid, pid);
+        snprintf(send_q, sizeof(send_q), NDRX_ADMIN_FMT, 
+                G_atmi_tls->G_atmi_conf.q_prefix, binary, srvid, pid);
     }
     
 out:

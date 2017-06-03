@@ -113,6 +113,9 @@ typedef struct
     
     int is_associated_with_thread; /* Is current context associated with thread? */
     
+    /* unsolicited notification processing */
+    void (*p_unsol_handler) (char *data, long len, long flags);
+    
 } atmi_tls_t;
 /*---------------------------Globals------------------------------------*/
 extern NDRX_API __thread atmi_tls_t *G_atmi_tls; /* Enduro/X standard library TLS */
