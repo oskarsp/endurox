@@ -431,7 +431,7 @@ public void cmd_generic_init(int ndrxd_cmd, int msg_src, int msg_type,
         call->magic = NDRX_MAGIC;
         call->msg_src = msg_src;
         call->msg_type = msg_type;
-        strcpy(call->reply_queue, reply_q);
+        NDRX_STRCPY_SAFE(call->reply_queue, reply_q);
         call->caller_nodeid = G_atmi_env.our_nodeid;
 }
 
@@ -487,7 +487,7 @@ public int cmd_generic_call_2(int ndrxd_cmd, int msg_src, int msg_type,
         call->magic = NDRX_MAGIC;
         call->msg_src = msg_src;
         call->msg_type = msg_type;
-        strcpy(call->reply_queue, reply_q);
+        NDRX_STRCPY_SAFE(call->reply_queue, reply_q);
         call->caller_nodeid = G_atmi_env.our_nodeid;
 
         if ((mqd_t)FAIL!=admin_queue)
@@ -634,7 +634,8 @@ public int cmd_generic_call_2(int ndrxd_cmd, int msg_src, int msg_type,
         else
         {
             char buf[2048];
-            sprintf(buf, "fail, code: %d: %s", reply->error_code, reply->error_msg);
+            snprintf(buf, sizeof(buf), "fail, code: %d: %s", 
+                    reply->error_code, reply->error_msg);
             NDRX_LOG(log_warn, "%s", buf);
 
             if (NULL!=p_put_output)
@@ -829,10 +830,10 @@ public int reply_with_failure(long flags, tp_command_call_t *last_call,
     call->timestamp = last_call->timestamp;
     call->callseq = last_call->callseq;
     /* Give some info which server replied - for bridge we need target put here! */
-    strcpy(call->reply_to, last_call->reply_to);
+    NDRX_STRCPY_SAFE(call->reply_to, last_call->reply_to);
     call->sysflags |=SYS_FLAG_REPLY_ERROR;
     call->rcode = rcode;
-    strcpy(call->callstack, last_call->callstack);
+    NDRX_STRCPY_SAFE(call->callstack, last_call->callstack);
     
     if (SUCCEED!=fill_reply_queue(call->callstack, last_call->reply_to, reply_to))
     {
@@ -971,7 +972,7 @@ public void ndrx_reply_with_failure(tp_command_call_t *tp_call, long flags,
     call.timestamp = tp_call->timestamp;
     call.callseq = tp_call->callseq;
     /* Give some info which server replied */
-    strcpy(call.reply_to, reply_to_q);
+    NDRX_STRCPY_SAFE(call.reply_to, reply_to_q);
     call.sysflags |=SYS_FLAG_REPLY_ERROR;
     /* Generate no entry, because we removed the queue
      * yeah, it might be too late for TPNOENT, but this is real error */

@@ -51,6 +51,7 @@
 #include <xa_cmn.h>
 #include <atmi_shm.h>
 #include <atmi_tls.h>
+#include <utlist.h>
 /*---------------------------Externs------------------------------------*/
 /*---------------------------Macros-------------------------------------*/
 /*---------------------------Enums--------------------------------------*/
@@ -341,6 +342,88 @@ out:
 public int _tpchkunsol(void) 
 {
     int ret = SUCCEED;
+    char *pbuf = NULL;
+    size_t pbuf_len;
+    size_t rply_len;
+    unsigned prio;
+    tpmemq_t *tmp;
+    tp_notif_call_t *notif;
+    
+    /* Allocate the buffer... to put data into */
+    NDRX_SYSBUF_MALLOC_OUT(pbuf, &pbuf_len, ret);
+
+    rply_len = generic_q_receive(G_atmi_tls->G_atmi_conf.reply_q, pbuf,
+                                           pbuf_len, &prio, TPNOBLOCK);
+    if (rply_len<=0)
+    {
+        NDRX_LOG(log_warn, "%s: No message (%lu)", __func__, (unsigned long)rply_len);
+        goto out;
+    }
+    
+    notif=(tp_notif_call_t *) pbuf;
+    
+    /* could use %zu,  but we must be max cross platform... */
+    NDRX_LOG(log_info, "%s: got message, len: %lu, command id: %d", 
+            __func__, (unsigned long)rply_len, notif->command_id);
+    
+    if (ATMI_COMMAND_TPNOTIFY == notif->command_id ||
+            ATMI_COMMAND_BROADCAST == notif->command_id)
+    {
+        NDRX_LOG(log_info, "Got unsol command");
+        ndrx_process_notif(pbuf, rply_len);
+        NDRX_FREE(pbuf);
+        pbuf = NULL;
+    }
+    else
+    {
+        NDRX_LOG(log_info, "got non unsol command - enqueue");
+        
+        if (NULL==(tmp = NDRX_CALLOC(1, sizeof(tpmemq_t))))
+        {
+            int err = errno;
+            NDRX_LOG(log_error, "Failed to alloc: %s", strerror(err));
+            userlog("Failed to alloc: %s", strerror(err));
+            FAIL_OUT(ret);
+        }
+        
+        tmp->buf = pbuf;
+        tmp->len = pbuf_len;
+        tmp->data_len = rply_len;
+
+        DL_APPEND(G_atmi_tls->memq, tmp); 
+    }
+out:
+
+    if (NULL!=pbuf)
+    {
+        NDRX_FREE(pbuf);
+    }
+    NDRX_LOG(log_debug, "%s returns %d", __func__, ret);
+
+    return ret;
+}
+
+/**
+ * Local broadcast, sends the message to 
+ * @param nodeid NULL, empty string or regexp of cluster nodes. not used on local
+ * @param usrname NULL, empty string or regexp of username. Not used.
+ * @param cltname NULL, empty string or regexp of client name. Used.
+ * @param data Data to broadcast to process...
+ * @param len Data len
+ * @param flags here TPREGEXMATCH flag affects node/usr/clt
+ * @return SUCCEED/FAIL
+ */
+public int _tpbroadcast_local(char *nodeid, char *usrname, char *cltname, 
+        char *data,  long len, long flags)
+{
+    int ret = SUCCEED;
+    
+    /* So list all client queues locally
+     * Match them
+     * Build client ID
+     * and run _tpnotify
+     */
+    
     
 out:
     return ret;

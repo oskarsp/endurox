@@ -263,6 +263,7 @@ public void * ndrx_atmi_tls_new(int auto_destroy, int auto_set)
     tls->G_atmi_is_init= 0;/*  Is environment initialised */
     memset (tls->G_call_state, 0, sizeof(tls->G_call_state));
     tls->tpcall_get_cd=MAX_ASYNC_CALLS-2; /* first available, we want test overlap!*/
+    tls->memq = NULL; /* In memory messages when tpchkunsol are performed... */
     /* tls->tpcall_callseq=0; */
     
     
