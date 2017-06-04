@@ -161,6 +161,27 @@ extern "C" {
     }\
 }
     
+ /**
+ * Allocate buffer, if fail set ATMI error, and goto out
+ */
+#define NDRX_SYSBUF_MALLOC_WERR_OUT(__buf, __p_bufsz, __ret)  \
+{\
+    __buf = NDRX_MALLOC(G_atmi_env.msgsize_max>ATMI_MSG_MAX_SIZE?G_atmi_env.msgsize_max:ATMI_MSG_MAX_SIZE);\
+    if (NULL==__buf)\
+    {\
+        int err = errno;\
+        _TPset_error_fmt(TPEOS, "%s: failed to allocate sysbuf: %s", __func__, strerror(errno));\
+        NDRX_LOG(log_error, "%s: failed to allocate sysbuf: %s", __func__, strerror(errno));\
+        userlog("%s: failed to allocate sysbuf: %s", __func__, strerror(errno));\
+        errno = err;\
+        FAIL_OUT(__ret);\
+    }\
+    if (NULL!=__p_bufsz)\
+    {\
+        *((int *)__p_bufsz) = (G_atmi_env.msgsize_max>ATMI_MSG_MAX_SIZE?G_atmi_env.msgsize_max:ATMI_MSG_MAX_SIZE);\
+    }\
+}
+    
 /**
  * Allocate the ATMI system buffer (MALLOC mode, just a hint)
  */
@@ -590,6 +611,7 @@ extern NDRX_API int _tpnotify(CLIENTID *clientid, TPMYID *p_clientid_myid,
         char *data, long len, long flags, 
         int dest_node, char *usrname,  char *cltname, char *nodeid, /* RFU */
         int ex_flags);
+extern int _tpchkunsol(void);
 extern NDRX_API void ndrx_process_notif(char *buf, long len);
 extern NDRX_API char * _tprealloc (char *buf, long len);
 extern NDRX_API long	_tptypes (char *ptr, char *type, char *subtype);

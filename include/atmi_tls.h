@@ -56,6 +56,21 @@ extern "C" {
 /*---------------------------Typedefs-----------------------------------*/
     
 /**
+ * Memory base Q (current with static buffer)
+ * but we could migrate to dynamically allocated buffers...
+ */
+typedef struct tpmemq tpmemq_t;
+struct tpmemq
+{    
+    char *buf;
+    size_t len;
+    size_t data_len;
+    /* Linked list */
+    tpmemq_t *prev;
+    tpmemq_t *next;
+};
+    
+/**
  * ATMI library TLS
  * Here we will have a trick, if we get at TLS, then we must automatically suspend
  * the global transaction if one in progress. To that if we move to different
@@ -86,6 +101,9 @@ typedef struct
     int tpcall_get_cd; /* first available, we want test overlap!*/
     /* unsigned tpcall_callseq; */
     /*int tpcall_cd;  = 0; */
+    
+    /* We need a enqueued list of messages */
+    tpmemq_t *memq; /* Message enqueued in memory... */
     
     /* tperror.c */
     char M_atmi_error_msg_buf[MAX_TP_ERROR_LEN+1]; /* = {EOS}; */

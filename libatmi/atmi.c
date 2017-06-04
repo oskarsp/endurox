@@ -1320,17 +1320,19 @@ public int tpchkunsol(void)
 
     if (SUCCEED!=entry_status)
     {
-        ret=FAIL;
-        goto out;
+        FAIL_OUT(ret);
     }   
     
-    /* Run the checks */
-    
-    _TPset_error_msg(TPENOENT, "TODO: tpchkunsol: Not yet implemented.");
-    ret = FAIL;
+    if (SUCCEED!=_tpchkunsol())
+    {
+        NDRX_LOG(log_error, "_tpchkunsol failed");
+        FAIL_OUT(ret);
+    }
 
 out:
     return ret;
 }
+
+
 
 

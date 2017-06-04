@@ -49,6 +49,7 @@
 
 #include "../libatmisrv/srv_int.h"
 #include "ndrxd.h"
+#include "utlist.h"
 #include <thlock.h>
 #include <xa_cmn.h>
 #include <atmi_shm.h>
@@ -611,8 +612,10 @@ public int _tpgetrply (int *cd,
     struct mq_attr new;
     long rply_len;
     unsigned prio;
-    char rply_buf[ATMI_MSG_MAX_SIZE];
-    tp_command_call_t *rply=(tp_command_call_t *)rply_buf;
+    /*char rply_buf[ATMI_MSG_MAX_SIZE];*/
+    char *pbuf = NULL;
+    int pbuf_len;
+    tp_command_call_t *rply;
     typed_buffer_descr_t *call_type;
     int answ_ok = FALSE;
     int is_abort_only = FALSE; /* Should we abort global tx (if open) */
@@ -652,6 +655,9 @@ public int _tpgetrply (int *cd,
         }
     }
 
+    /* Allocate the buffer, dynamically... */
+    NDRX_SYSBUF_MALLOC_WERR_OUT(pbuf, &pbuf_len, ret);
+        
     /* TODO: If we keep linked list with call descriptors and if there is
      * none, then we should return something back - FAIL/proto, not? */
     /**
@@ -659,10 +665,34 @@ public int _tpgetrply (int *cd,
      */
     while (!answ_ok)
     {
-        
-        /* receive the reply back */
-        rply_len = generic_q_receive(G_atmi_tls->G_atmi_conf.reply_q, rply_buf,
-                                        sizeof(rply_buf), &prio, flags);
+        /* We shall check that we do not have something in memq...
+         * if so then switch the buffers and make current free
+         */
+        if (NULL!=G_atmi_tls->memq)
+        {
+            NDRX_LOG(log_info, "Got message from memq...");
+            /* grab the buffer of mem linked list */
+            NDRX_FREE(pbuf);
+            
+            /* the buffer is allocated already by sysalloc, thus
+             * continue to use this buffer and free up our working buf.
+             */
+            pbuf = G_atmi_tls->memq->buf;
+            pbuf_len = G_atmi_tls->memq->len;
+            rply_len = G_atmi_tls->memq->data_len;
+            
+            /* delete first elem in the list */
+            DL_DELETE(G_atmi_tls->memq, G_atmi_tls->memq);
+            NDRX_FREE(G_atmi_tls->memq);
+        }
+        else
+        {
+            NDRX_LOG(log_info, "Waiting on OS Q...");
+            
+            /* receive the reply back */
+            rply_len = generic_q_receive(G_atmi_tls->G_atmi_conf.reply_q, pbuf,
+                                            pbuf_len, &prio, flags);
+        }
         
         /* In case  if we did receive any response (in non blocked mode
          * or we did get fail in blocked mode with TPETIME, then we should
@@ -709,7 +739,7 @@ public int _tpgetrply (int *cd,
                 NDRX_LOG(log_debug, "%s message received -> _tpnotify", 
                         (ATMI_COMMAND_TPNOTIFY==rply->command_id?"Notification":"Broadcast"));
                 /* process the notif... */
-                ndrx_process_notif(rply_buf, rply_len);
+                ndrx_process_notif(pbuf, rply_len);
                 
                 /* And continue... */
                 continue;
@@ -841,6 +871,13 @@ out:
     {
         return ret;
     }
+    
+    /* free up the system buffer */
+    if (NULL!=pbuf)
+    {
+        NDRX_FREE(pbuf);
+    }
+    
 }
 
 /**
