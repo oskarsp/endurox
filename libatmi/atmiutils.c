@@ -1384,3 +1384,13 @@ public int ndrx_myid_translate_to_q(TPMYID *p_myid, char *rply_q, int rply_q_buf
 out:
     return ret;
 }
+
+/**
+ * Return queue type classifier
+ * @param q full queue (with prefix)
+ * @return see NDRX_QTYPE_*
+ */
+public int ndrx_get_q_type(char *q)
+{
+    
+}
