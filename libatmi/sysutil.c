@@ -809,7 +809,6 @@ public int ndrx_get_cached_svc_q(char *q)
         return SUCCEED;
     }
     
-    
     qlist = ndrx_sys_mqueue_list_make(G_atmi_env.qpath, &ret);
     
     if (SUCCEED!=ret)

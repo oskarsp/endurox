@@ -419,7 +419,7 @@ public int _tpbroadcast_local(char *nodeid, char *usrname, char *cltname,
     int ret = SUCCEED;
     string_list_t* qlist = NULL;
     string_list_t* elt = NULL;
-    
+    int typ;
     /* So list all client queues locally
      * Match them
      * Build client ID
@@ -442,6 +442,15 @@ public int _tpbroadcast_local(char *nodeid, char *usrname, char *cltname,
          * server & client reply qs 
          * because server can have reply q too... as we know.
          */
+        
+        typ = ndrx_q_type_get(elt->qname);
+        
+        if (NDRX_QTYPE_CLTRPLY==typ)
+        {
+            /* This is our client, lets broadcast to it... 
+             * Build client id..
+             */
+        }
         
     }
     

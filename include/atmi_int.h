@@ -591,6 +591,7 @@ extern NDRX_API int ndrx_myid_parse_srv(char *my_id, TPMYID *out, int iscnv_init
 extern NDRX_API int ndrx_myid_is_alive(TPMYID *p_myid);
 extern NDRX_API void ndrx_myid_dump(int lev, TPMYID *p_myid, char *msg);
 extern NDRX_API int ndrx_myid_translate_to_q(TPMYID *p_myid, char *rply_q, int rply_q_buflen);
+extern NDRX_API int ndrx_atmiutil_init(void);
 
 /* Base64 encode/decode with file system valid output */
 extern NDRX_API char * atmi_xa_base64_encode(unsigned char *data,

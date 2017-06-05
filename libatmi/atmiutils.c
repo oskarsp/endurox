@@ -85,11 +85,43 @@
             memset((char *)&__attr, 0, sizeof(__attr));\
             ndrx_mq_getattr(X, &__attr);\
             NDRX_LOG(log_error, "mq_flags=%ld mq_maxmsg=%ld mq_msgsize=%ld mq_curmsgs=%ld",\
-                                __attr.mq_flags, __attr.mq_maxmsg, __attr.mq_msgsize, __attr.mq_curmsgs);}
+                    __attr.mq_flags, __attr.mq_maxmsg, __attr.mq_msgsize, __attr.mq_curmsgs);}
 /*---------------------------Enums--------------------------------------*/
 /*---------------------------Typedefs-----------------------------------*/
+
+/**
+ * Q type prefix mapping table
+ */
+struct prefixmap
+{
+    char *prefix;
+    char *offset;
+    int len;
+    int type;
+    char *descr;
+};
+typedef struct prefixmap prefixmap_t;
+
 /*---------------------------Globals------------------------------------*/
 /*---------------------------Statics------------------------------------*/
+
+
+/**
+ * Prefix mapping table for detecting Q type
+ */
+public prefixmap_t M_prefixmap[] =
+{  
+    /* Qprefix format string, match off, len, q type classifier */
+    {NDRX_NDRXD,                NULL, 0, NDRX_QTYPE_NDRXD,      "ndrxd Q"},
+    {NDRX_SVC_QFMT_PFX,         NULL, 0, NDRX_QTYPE_SVC,        "service Q"},
+    {NDRX_ADMIN_FMT_PFX,        NULL, 0, NDRX_QTYPE_SRVADM,     "svc admin Q"},
+    {NDRX_SVR_QREPLY_PFX,       NULL, 0, NDRX_QTYPE_SRVRPLY,    "server rply Q"},
+    {NDRX_CLT_QREPLY_PFX,       NULL, 0, NDRX_QTYPE_CLTRPLY,    "client rply Q"},
+    {NDRX_CONV_INITATOR_Q_PFX,  NULL, 0, NDRX_QTYPE_CONVINIT,   "conv initi Q"},
+    {NDRX_CONV_SRV_Q_PFX,       NULL, 0, NDRX_QTYPE_CONVSRVQ,   "conv server Q"},
+    {NULL}
+};
+
 /*---------------------------Prototypes---------------------------------*/
 
 /**
@@ -176,7 +208,8 @@ out:
  * @param attr
  * @return
  */
-public mqd_t ndrx_mq_open_at(const char *name, int oflag, mode_t mode, struct mq_attr *attr)
+public mqd_t ndrx_mq_open_at(const char *name, int oflag, mode_t mode, 
+        struct mq_attr *attr)
 {
     struct mq_attr attr_int;
     struct mq_attr * p_at;
@@ -455,8 +488,8 @@ public int cmd_generic_call_2(int ndrxd_cmd, int msg_src, int msg_type,
                             void (*p_put_output)(char *text),
                             int need_reply,
                             int reply_only,
-                            char *rply_buf_out,             /* might be a null  */
-                            int *rply_buf_out_len,          /* if above is set, then must not be null */
+                            char *rply_buf_out,    /* might be a null  */
+                            int *rply_buf_out_len, /* if above is set, then must not be null */
                             int flags,
         /* TODO Might want to add checks before calling rply_request func...
          * for magic and command code. */
@@ -579,7 +612,8 @@ public int cmd_generic_call_2(int ndrxd_cmd, int msg_src, int msg_type,
 
         if (NDRX_MAGIC!=reply->magic)
         {
-            NDRX_LOG(log_error, "Got invalid response from ndrxd: invalid magic (expected: %ld, got: %ld)!",
+            NDRX_LOG(log_error, "Got invalid response from ndrxd: invalid magic "
+                    "(expected: %ld, got: %ld)!",
                     NDRX_MAGIC, reply->magic);
 
             if (NULL!=p_put_output)
@@ -843,9 +877,11 @@ public int reply_with_failure(long flags, tp_command_call_t *last_call,
 
     if (NULL==buf)
     {
-        if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, sizeof(*call), flags, 0)))
+        if (SUCCEED!=(ret=generic_q_send(reply_to, (char *)call, 
+                sizeof(*call), flags, 0)))
         {
-            NDRX_LOG(log_error, "%s: Failed to send error reply back, os err: %s", fn, strerror(ret));
+            NDRX_LOG(log_error, "%s: Failed to send error reply back, os err: %s", 
+                    fn, strerror(ret));
             goto out;
         }
     }
@@ -936,7 +972,7 @@ public atmi_svc_list_t* ndrx_get_svc_list(int (*p_filter)(char *svcnm))
                     
                     goto out;
                 }
-                strcpy(tmp->svcnm, SHM_SVCINFO_INDEX(svcinfo, i)->service);
+                NDRX_STRCPY_SAFE(tmp->svcnm, SHM_SVCINFO_INDEX(svcinfo, i)->service);
                 LL_APPEND(ret, tmp);
             }   
         }
@@ -1386,11 +1422,72 @@ out:
 }
 
 /**
+ * Initialize ATMI util lib.
+ * Setup the queue testing strings for local host
+ * @return SUCCEED/FAIL
+ */
+public int ndrx_atmiutil_init(void)
+{
+    int ret = SUCCEED;
+    prefixmap_t *p = M_prefixmap;
+    
+    while (NULL!=p->prefix)
+    {
+        p->offset = strchr(p->prefix, NDRX_FMT_SEP);
+        
+        if (NULL==p->offset)
+        {
+            NDRX_LOG(log_error, "%s failed to search for [%c] in [%s]", __func__, 
+                    NDRX_FMT_SEP, p->prefix);
+            FAIL_OUT(ret);
+        }
+        
+        /* calculate match length for the Q */
+        p->len = strlen(p->offset);
+        
+        p++;
+    }
+    
+out:
+    return ret;
+}
+/**
  * Return queue type classifier
  * @param q full queue (with prefix)
- * @return see NDRX_QTYPE_*
+ * @return see NDRX_QTYPE_* or FAIL
  */
-public int ndrx_get_q_type(char *q)
+public int ndrx_q_type_get(char *q)
 {
+    int ret = FAIL;
+    prefixmap_t *p = M_prefixmap;
+    char *q_wo_pfx = strchr(q, NDRX_FMT_SEP);
     
+    if (NULL==q_wo_pfx)
+    {
+        NDRX_LOG(log_error, "Invalid Enduro/X Q (possible not Enduro/X): [%s]", 
+                q_wo_pfx);
+        FAIL_OUT(ret);
+    }
+    
+    while (NULL!=p->prefix)
+    {
+        if (0==strncmp(p->offset, q_wo_pfx, p->len))
+        {
+            /* matched */
+            break;
+        }
+        
+        p++;
+    }
+    
+    if (NULL!=p)
+    {
+        ret = p->type;
+        NDRX_LOG(log_debug, "[%s] matched type [%d/%s]", q, ret, p->descr);
+    }
+    
+out:
+    return ret;
 }
+
+

@@ -76,6 +76,7 @@ extern "C" {
 
 
 #define NDRX_SVC_QFMT     "%s,svc,%s"            /* Q format in epoll mode (one q multiple servers) */
+#define NDRX_SVC_QFMT_PFX "%s,svc,"              /* Service Q prefix */
 #define NDRX_QTYPE_SVC      2                    /* Service Q */
 #define NDRX_SVC_QFMT_SRVID "%s,svc,%s,%hd"       /* Q format in poll mode (use server id) */
 #define NDRX_ADMIN_FMT    "%s,srv,admin,%s,%d,%d"
@@ -103,27 +104,27 @@ extern "C" {
 #define NDRX_QTYPE_SRVADM   3                   /* Server Admin Q */
     
 #define NDRX_SVR_QREPLY   "%s,srv,reply,%s,%d,%d" /* qpfx, procname, serverid, pid */
-#define NDRX_QTYPE_SRVRPLY  4                   /* Server Reply Q */
 #define NDRX_SVR_QREPLY_PFX "%s,srv,reply," /* Prefix for sanity check. */
+#define NDRX_QTYPE_SRVRPLY  4                   /* Server Reply Q */
 
 /* this may end up in "112233-" if client is not properly initialised */
 /* NOTE: Myid contains also node_id, the client Q does not contain it
  * as it is local
  */
 #define NDRX_CLT_QREPLY   "%s,clt,reply,%s,%d,%ld" /* pfx, name, pid, context id*/
-#define NDRX_QTYPE_CLTRPLY  5                   /* Client Reply Q */
 #define NDRX_CLT_QREPLY_PFX   "%s,clt,reply," /* Prefix for sanity check */
+#define NDRX_QTYPE_CLTRPLY  5                   /* Client Reply Q */
 #define NDRX_CLT_QREPLY_CHK   ",clt,reply," /* (verify that it is reply q) */
 
 #define NDRX_ADMIN_SVC     "%s-%d"
 
 /* This queue basically links two process IDs for conversation */
 #define NDRX_CONV_INITATOR_Q  "%s,cnv,c,%s,%d" /* Conversation initiator */
-#define NDRX_QTYPE_CONVINIT 6                   /* Conv initiator Q */
 #define NDRX_CONV_INITATOR_Q_PFX "%s,cnv,c," /* Prefix for sanity check. */
+#define NDRX_QTYPE_CONVINIT 6                   /* Conv initiator Q */
 #define NDRX_CONV_SRV_Q       "%s,cnv,s,%s,%d,%s" /* Conversation server Q */
-#define NDRX_QTYPE_CONVSRVQ 7                   /* Conv server Q */
 #define NDRX_CONV_SRV_Q_PFX "%s,cnv,s," /* Prefix for sanity check. */
+#define NDRX_QTYPE_CONVSRVQ 7                   /* Conv server Q */
 
 #define NDRX_MY_ID_SRV        "srv,%s,%d,%d,%ld,%d" /* binary name, server id, pid, contextid, nodeid */
 #define NDRX_MY_ID_SRV_PARSE  "srv %s %d %d %ld %d" /* binary name, server id, pid, contextid, nodeid for parse */
