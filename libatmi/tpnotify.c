@@ -417,14 +417,35 @@ public int _tpbroadcast_local(char *nodeid, char *usrname, char *cltname,
         char *data,  long len, long flags)
 {
     int ret = SUCCEED;
+    string_list_t* qlist = NULL;
+    string_list_t* elt = NULL;
     
     /* So list all client queues locally
      * Match them
      * Build client ID
      * and run _tpnotify
      */
+      
+    /* list all queues */
+    qlist = ndrx_sys_mqueue_list_make(G_atmi_env.qpath, &ret);
     
+    if (SUCCEED!=ret)
+    {
+        NDRX_LOG(log_error, "posix queue listing failed... continue...!");
+        ret = SUCCEED;
+        qlist = NULL;
+    }
+    
+    LL_FOREACH(qlist,elt)
+    {
+        /* currently we will match cltname only and will work on
+         * server & client reply qs 
+         * because server can have reply q too... as we know.
+         */
+        
+    }
     
 out:
+    ndrx_string_list_free(qlist);   
     return ret;
 }

@@ -67,14 +67,16 @@ extern "C" {
 /*
  * Posix Queue processing path prefixes
  */
-#define NDRX_FMT_SEP      ','                   /* Seperator in qnames */
-#define NDRX_FMT_SEP_STR  ","                   /* Seperator in qnames */
+#define NDRX_FMT_SEP      ','                   /* Seperator in qnames      */
+#define NDRX_FMT_SEP_STR  ","                   /* Seperator in qnames      */
 #define NDRX_NDRXD        "%s,sys,bg,ndrxd"
+#define NDRX_QTYPE_NDRXD    1                   /* ndrxd backend q          */
 #define NDRX_NDRXCLT      "%s,sys,bg,xadmin,%d"
-#define NDRX_NDRXCLT_PFX  "%s,sys,bg,xadmin," /* Prefix for sanity check */
+#define NDRX_NDRXCLT_PFX  "%s,sys,bg,xadmin," /* Prefix for sanity check    */
 
 
 #define NDRX_SVC_QFMT     "%s,svc,%s"            /* Q format in epoll mode (one q multiple servers) */
+#define NDRX_QTYPE_SVC      2                    /* Service Q */
 #define NDRX_SVC_QFMT_SRVID "%s,svc,%s,%hd"       /* Q format in poll mode (use server id) */
 #define NDRX_ADMIN_FMT    "%s,srv,admin,%s,%d,%d"
 
@@ -91,15 +93,17 @@ extern "C" {
     
 #define NDRX_SVC_TMQ       "@TMQ-%ld-%d"        /* Node_id,srvid */
 /* QSPACE service format */
-#define NDRX_SVC_QSPACE    "@QSP%s"            /* Q space format string (for service) */
+#define NDRX_SVC_QSPACE    "@QSP%s"             /* Q space format string (for service) */
     
 #define NDRX_SVC_CPM      "@CPMSVC"             /* Client Process Monitor svc */
     
-#define NDRX_SVC_CCONF      "@CCONF"             /* Common-config server */
+#define NDRX_SVC_CCONF      "@CCONF"            /* Common-config server */
 
 #define NDRX_ADMIN_FMT_PFX "%s,srv,admin," /* Prefix for sanity check. */
-
+#define NDRX_QTYPE_SRVADM   3                   /* Server Admin Q */
+    
 #define NDRX_SVR_QREPLY   "%s,srv,reply,%s,%d,%d" /* qpfx, procname, serverid, pid */
+#define NDRX_QTYPE_SRVRPLY  4                   /* Server Reply Q */
 #define NDRX_SVR_QREPLY_PFX "%s,srv,reply," /* Prefix for sanity check. */
 
 /* this may end up in "112233-" if client is not properly initialised */
@@ -107,6 +111,7 @@ extern "C" {
  * as it is local
  */
 #define NDRX_CLT_QREPLY   "%s,clt,reply,%s,%d,%ld" /* pfx, name, pid, context id*/
+#define NDRX_QTYPE_CLTRPLY  5                   /* Client Reply Q */
 #define NDRX_CLT_QREPLY_PFX   "%s,clt,reply," /* Prefix for sanity check */
 #define NDRX_CLT_QREPLY_CHK   ",clt,reply," /* (verify that it is reply q) */
 
@@ -114,8 +119,10 @@ extern "C" {
 
 /* This queue basically links two process IDs for conversation */
 #define NDRX_CONV_INITATOR_Q  "%s,cnv,c,%s,%d" /* Conversation initiator */
+#define NDRX_QTYPE_CONVINIT 6                   /* Conv initiator Q */
 #define NDRX_CONV_INITATOR_Q_PFX "%s,cnv,c," /* Prefix for sanity check. */
 #define NDRX_CONV_SRV_Q       "%s,cnv,s,%s,%d,%s" /* Conversation server Q */
+#define NDRX_QTYPE_CONVSRVQ 7                   /* Conv server Q */
 #define NDRX_CONV_SRV_Q_PFX "%s,cnv,s," /* Prefix for sanity check. */
 
 #define NDRX_MY_ID_SRV        "srv,%s,%d,%d,%ld,%d" /* binary name, server id, pid, contextid, nodeid */
