@@ -1,0 +1,28 @@
++ umask 022
++ cd /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/BUILD
++ mv /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/endurox-2.4.3-1.linuxmint17_2.x86_64 /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/tmpBBroot
++ exit 0
++ umask 022
++ cd /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/BUILD
++ [ -e /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/endurox-2.4.3-1.linuxmint17_2.x86_64 ]
++ mv /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/tmpBBroot /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/endurox-2.4.3-1.linuxmint17_2.x86_64
++ /usr/lib/rpm/brp-compress
++ /usr/lib/rpm/brp-strip /usr/bin/strip
++ /usr/lib/rpm/brp-strip-static-archive /usr/bin/strip
++ /usr/lib/rpm/brp-strip-comment-note /usr/bin/strip /usr/bin/objdump
+warning: File listed twice: /usr/share/man/man5/ex_env.5.gz
+warning: File listed twice: /usr/share/man/man5/ex_envover.5.gz
+warning: File listed twice: /usr/share/man/man5/ndrxconfig.xml.5.gz
+warning: File listed twice: /usr/share/man/man5/ndrxdebug.conf.5.gz
+warning: File listed twice: /usr/share/man/man8/cpmsrv.8.gz
+warning: File listed twice: /usr/share/man/man8/mkfldhdr.8.gz
+warning: File listed twice: /usr/share/man/man8/ndrxd.8.gz
+warning: File listed twice: /usr/share/man/man8/tmsrv.8.gz
+warning: File listed twice: /usr/share/man/man8/tpbridge.8.gz
+warning: File listed twice: /usr/share/man/man8/tpevsrv.8.gz
+warning: File listed twice: /usr/share/man/man8/tprecover.8.gz
+warning: File listed twice: /usr/share/man/man8/ud.8.gz
+warning: File listed twice: /usr/share/man/man8/xadmin.8.gz
++ umask 022
++ cd /home/mvitolin/projects/endurox/_CPack_Packages/Linux/RPM/BUILD
++ exit 0

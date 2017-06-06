@@ -1,0 +1,585 @@
+Generating Sources
+==================
+Madars Vitolins
+v1.0, 2012-12:
+	Initial draft
+:doctype: book
+
+EnduroX Development standard
+----------------------------
+EnduroX build system is CMake. Version used should be 2.8 and above. It uses
+Flex and Bison for building UBF (FML) Expressions.
+
+Intension is done with as 4x spaces. EnduroX is programmed in NetBeans c/c++
+project. NetBeans supports CMake projects.
+
+Project also uses 'libxml2' (provided by system), 'exhash' (already included in 'include' dir) 
+and cgreen (integrated into Enduro/X) for unit testing.
+
+Unit testing
+------------
+
+Bot UBF and ATMI sub-systems are unit tested. UBF tests are located under 
+'ubftest' folder, which could be run by:
+
+--------------------------------------------------------------------------------
+$ ./ubfunit1 2>/dev/null
+Running "main"...
+Completed "main": 5749 passes, 0 failures, 0 exceptions.
+--------------------------------------------------------------------------------
+
+ATMI tests are located at 'atmitest' directory, can be run by:
+--------------------------------------------------------------------------------
+$ ./run.sh 
+tail -n1 test.out
+Completed "main": 18 passes, 0 failure, 0 exceptions.
+--------------------------------------------------------------------------------
+
+
+Enduro/X libraries
+------------------
+
+The framework is composed by following internal libraries and it's dependencies:
+[dia, module_dependency.dia, module_dependency.png, x300]
+-------------------------------
+-------------------------------
+
+Common configuration
+--------------------
+
+Enduro/X users are welcome to use common configuration engine. This engine uses
+ini files to get key/values from ini section (and subsection with inheritance).
+The configuration can point to directory and in that case Enduro/X will read the
+all configuration files in directory which ends with with ".ini .cfg, .conf, .config".
+Configuration engine will automatically detect that given resource is directory
+and will start to scan for files in directory.
+
+The library keeps all ini file data in memory in hash tables, which also can be iterated
+as the linked lists. The library can be instructed to refresh the memory configuration.
+Refresh function detects any files changed in disk (by time stamp) and reload the data
+in memory.
+
+=== Enduro/X common config setup
+
+Enduro/X can be configured by using ini file (or files) instead of environment variables, 
+ndrxdebug.conf and q.conf.
+Two new environment variables now are added to the system:
+
+1. NDRX_CCONFIG=/path/to/ini/file/or/directory/with/files 
+
+2. And optional NDRX_CCTAG which allows processes to specify the subsection of Enduro/X system settings.
+
+The configurations sections are:
+
+- [@global] - environment variables for process (see ex_env(5))
+
+- [@debug] - debug configuration per binary (see ndrxdebug.conf(5))
+
+- [@queue] - persistent queue configurations.
+
+If you use NDRX_CCTAG or specify the "cctag" for ATMI server, then Enduro/X 
+will scan for sections like (e.g. cctag=TAG1):
+
+- [@global/TAG1] and then [@global]
+
+- [@debug/TAG1] and then [@debug]
+
+- [@queue/TAG1] and then [@debug]
+
+cctag can contain multiple tags, which are separated by '/'.
+In that case multiple lockups will be made with base section combination.
+
+=== User accessible configuration server
+
+"cconfsrv" XATMI server which can be used by applications to use Enduro/X 
+framework for application configuration. The user application can call the 
+"@CCONFIG" server in two modes:
+
+A) for getting the exact section;
+
+B) for listing the sections.
+
+See cconfsrv(8) for more details. 
+
+The idea behind this is that user can do the programming under Enduro/X in
+ multiple languages (C/Go/Perl/Python/PHP/NodeJS) and these modules typically
+needs configuration. It would be waste of time if for each of the languages
+developer would need to think how to read the configuration from configuration
+files with native libraries. The Enduro/X offers standard XATMI micro-service 
+call for reading the ini files in common way for whole application,
+no matter in which language it is programmed.
+
+But C/C++ programmers can use Enduro/X direct libraries for configuration processing.
+See the 'atmitest/test029_inicfg/atmiclt29.c' for sample code.
+
+
+=== Common configuration internals
+The configuration driving is built in multiple layers:
+
+- Layer 1: Physical file reading by "ini.h" library which gives the 
+callback for any parsed key/value/section;
+
+- Layer 2: Enduro/X code named "inicfg.h" and "inicfg.c". This drives the configuration
+object loads files into memory. Performs the refreshes, resolves the sections (with inheritance).
+Returns the buffers with values.
+
+- Layer 3: High level configuration driving by "cconfig.h" and "cconfig.c". This operates
+with Enduro/X environment variables and Enduro/X configuration files.
+However you may use different env variables for different purposes. For example:
+"NDRX_CCONFIG" variable can point to Enduro/X config, but "NDRX_CCONFIG1" can point to your
+application configuration. And this still is valid setup and keeps files separate.
+
+- Layer 4: "cconfsrv". This is high level API, accessible by transaction protocol (TP)
+sub-system. See the cconfsrv(8) manpage. Internally is uses Layer 2 and 3 API.
+
+[dia, common_config.dia, common_config.png, x450]
+-------------------------------
+-------------------------------
+
+== Common Debug logging API - TPLOG
+
+Enduro/X offer debug logging facility named "TPLOG". TPLog basically stands for extended
+user log. The user applications can use this API to configure TPLog, NDRX and UBF logs to
+be redirect to specified files, configure levels. Enduro/X introduces concept of request
+logging which means that each system request (or session) which processes UBF buffers can
+be logged to separate file. Which basically redirects NDRX, UBF and TPLog (user) to specific
+file. File can be set by *tplogsetreqfile(5)*.
+
+=== Logging facilities 
+
+- 'NDRX', logging facility code 'N' - this is Enduro/X XATMI framework internal debug logging.
+Debug string setting for level is set with keyword 'ndrx'. Facility is defined with macros
+*LOG_FACILITY_NDRX*.
+
+- 'UBF', logging facility code 'U' - this is UBF library logs. In debug string level is set with
+keyword 'ubf'. Facility is defined with macros 'LOG_FACILITY_UBF'.
+
+- 'TP', logging facility code 't' - this is user logs. In debug string level is set with
+keyword 'tp'. Facility is defined with macros 'LOG_CODE_TP'. This is process based logging.
+
+- 'TP_THREAD', logging facility code 'T' - this is user logs, set on per thread basis. The log level
+is set with keyword 'tp'. Facility is defined with macros 'LOG_FACILITY_TP_THREAD'.
+
+- 'TP_REQUEST', logging facility code 'R' - this is user logs, set on per thread/request basis. The log level is set with keyword 'tp'. Facility is defined with macros 'LOG_FACILITY_TP_REQUEST'.
+
+=== Hierarchy of the  loggers (facilities)
+
+The loggers output the debug content in following order of the facilities status (i.e. definition of current logger):
+
+- If 'TP_REQUEST' is open (debug file set), then all logging (NDRX, UBF, TP) will go here.
+The debug level is shared at application level with NDRX, UBF and TP facilities. There will be no
+impact if 'TP_REQUEST' log level is different. The request logging can be open by *tplogsetreqfile(3)*. Logger can be closed by *tplogclosereqfile(3)*.
+
+- If 'TP_THREAD' is open (debug file set), then all logs including NDRX, UBF and TP will log here. Thread logger can be open by doing *tplogconfig(LOG_FACILITY_TP_THREAD, ...)*. Thread logger can be closed by *tplogclosethread(3)*
+
+If there is no TP_REQUEST or TP_THREAD facilities open, then logging is done on per process basis, where there are 3 facilities which are always open:
+
+- 'NDRX', here XATMI sub-system is logged. It can be configured to use separate file by *tplogconfig(3)*.
+
+- 'UBF', here UBF sub-system is logged. It can be configured to use separate file by *tplogconfig(3)*.
+
+- 'TP', here TPLog sub-system is logged. It can be configured to use separate file by *tplogconfig(3)*.
+
+
+=== Debug string format
+
+The *debug string* format is described in *ndrxdebug.conf(5)* manpage. basically it is following:
+
+- ndrx=<Debug level> ubf=<Debug level> tp=<Debug level> bufsz=<Number of line to write after doing fflush> file=<log file name, if empty, then stderr>
+
+The debug level is one of the following:
+
+0. No logging output
+
+1. Fatal
+
+2. Error
+
+3. Warning 
+
+4. Program info
+
+5. Debug
+
+=== Brief of logging functions
+
+Enduro/X debugging API offers following list of the functions:
+
+==== Part of the standard library (ndebug.h)
+
+- void tplogdump(int 'lev', char *'comment', void *'ptr', int 'len'); - 
+Dumps the binary buffer (hex-dump) to current logger
+
+- void tplogdumpdiff(int 'lev', char *'comment', void *'ptr1', void *'ptr2', int 'len'); - 
+Compares two binary buffers and prints the hex-dump to current logger
+
+- void tplog(int 'lev', char *'message'); -
+Prints the message to current logger, at given log level
+
+- int tploggetreqfile(char *'filename', int 'bufsize'); - 
+Get the current request file (see the next chapter)
+
+- int tplogconfig(int 'logger', int 'lev', char *'debug_string', char *'module', char *'new_file');
+Configure logger. The loggers can be binary 'ored' and with one function call multiple loggers
+can be configured. 'lev' is optional, if not set it must be -1. Debug string is optional, but if have
+one then it can contain all elements. 'module' is 4 symbols log module code using in debug lines.
+'new_file' if set (not NULL and not EOS(0x00)) then it have priority over the file present in debug string.
+
+- void tplogclosereqfile(void); -
+Close request file. The current logger will fall-back to either thread logger (if configured)
+or to process loggers.
+
+- void tplogclosethread(void); - 
+Close thread logger, if it was configured.
+
+- void tplogsetreqfile_direct(char *filename); -
+Set the request file, directly to logger. This operation is used by next function which
+allows to store the current request logging function in the XATMI UBF buffer.
+
+==== Part of the XATMI library (xatmi.h)
+
+- int tplogsetreqfile(char **'data', char *'filename', char *'filesvc'); -
+Set the request file. If 'data' is UBF buffer allocated by *tpcalloc(3)*, then
+it will search for 'EX_NREQLOGFILE' field presence there. If field present,
+then 'TP_REQUEST' logger will be set to. If field not present, but 'filename' is set (not NULL and not EOS),
+then request logger will be set to this file and name will be loaded into buffer.
+If file name is not in the buffer and not in the 'filename' but 'filesvc' present
+then this XATMI service will be called with 'data' buffer and it is expected that field
+'EX_NREQLOGFILE' will be set which then is used for logging.
+
+- int tploggetbufreqfile(char *'data', char *'filename', int 'bufsize'); -
+Get the request logging file name from XATMI buffer, basically this returns
+'EX_NREQLOGFILE' value.
+
+- int tplogdelbufreqfile(char *'data'); -
+Delete the request logging information from XATMI buffer.
+
+- void tplogprintubf(int 'lev', char *'title', UBFH *'p_ub'); - 
+print the UBF buffer to current logger.
+
+=== Request logging concept
+
+Request logging is concept when each user session or transaction which is processed by multiple XATMI
+clients and servers, are logged to single trace file. This is very useful when system have high
+load with request. Then administrators can identify single transaction and with this request log
+file it is possible to view full sequence of operation which system performed. You do not need
+anymore to grep the big log files (based on each service output) and glue together the picture
+what have happened in system for particular transaction.
+
+The basic use of the request logging is following:
+
+Client process:
+--------------------------------------------------------------------------------
+
+/* read the request from network & parse
+ * get the transaction subject (for example bank card number (PAN))
+ * open the log file for each bank card request
+ * e.g.
+ */
+
+tplogsetreqfile(&p_ub, "/opt/app/logs/pan_based/<PAN>_<Time_stamp>", NULL);
+
+tplog("About to authorize");
+
+tpcall("AUTHORIZE", &p_ub, ...);
+
+/* reply to network */
+
+tplog("Transaction complete");
+
+/* close the logger after transaction complete */
+tplogclosereqfile();
+--------------------------------------------------------------------------------
+
+
+Server process - AUTHORIZE service
+--------------------------------------------------------------------------------
+void AUTHORIZE(TPSVCINFO *p_svc)
+{
+    UBFH *p_ub = (UBFH *)p_svc->data;
+
+    /* Just print the buffer */
+    tplogsetreqfile((char **)&p_ub, NULL, NULL);
+
+    tplogprintubf(log_debug, "AUTHORIZE got request", p_ub);
+    
+    tplog(log_debug, "Processing...!");
+
+    /* do the work */
+
+	/* close the request file as we are done. */    
+    tplogclosereqfile();
+
+    tpreturn(  TPSUCCESS,
+                0L,
+                (char *)p_ub,
+                0L,
+                0L);
+}
+--------------------------------------------------------------------------------
+
+
+Lest assume that for our transaction logfile is set to: '/opt/app/logs/pan_based/5555550000000001_1475008709'
+then transaction could look like:
+
+[dia, reqlogging.dia, reqlogging.png, x300]
+-------------------------------
+-------------------------------
+
+=== Understanding the format of log file
+
+For example given code:
+--------------------------------------------------------------------------------
+#include <ndebug.h>
+
+int main (int argc, char **argv)
+{
+        tplog(5, "Hello from function logger");
+        
+        TP_LOG(log_debug, "Hello from macro logger [logging level %d]", log_debug);
+
+        return 0;
+}
+--------------------------------------------------------------------------------
+
+Will print to log file following messages:
+
+-------------------------------------------------------------------------------
+t:USER:5:11064:000:20160928:100225252:/tplog.c:0412:Hello from function logger
+t:USER:5:11064:000:20160928:100225252:ogtest.c:0007:Hello from macro logger [logging level 5]
+--------------------------------------------------------------------------------
+
+So in general log line format is following:
+
+--------------------------------------------------------------------------------
+<LOGGER_FACILITY>:<MODULE>:<LOG_LEVEL>:<PID>:<THREAD_ID>:<DATE>:<TIME_MS>:<SOURCE_FILE>:<LINE>:<MESSAGE>
+--------------------------------------------------------------------------------
+
+Where:
+
+- 'LOGGER_FACILITY' - is logger code which to which message is logged, i.e. 'N' - NDRX process based logger, 
+'U' - UBF process based logger, 't' - TP log, process based, 'T' - thread based logger, 'R' - request logger.
+
+- 'MODULE' - 4 char long logger, 'NDRX' and 'UBF ' or user given code by *tplogconfig(3)*. Default is 'USER'.
+
+- 'LOG_LEVEL' - message log level digit.
+
+- 'PID' - process id.
+
+- 'THREAD_ID' - internal Enduro/X thread identifier.
+
+- 'DATE' - YYYYMMDD time stamp of the message (date part) in local TZ.
+
+- 'TIME_MS' - HHmmssSSS - time stamp of the message (time part) in local TZ.
+
+- 'SOURCE_FILE' - last 8 symbols of C/C++ source file from which macro logger was called.
+
+- 'LINE' - line number of the message in source code (where the macro logger was called).
+
+- 'MESSAGE' - logged user message.
+
+== Queuing mechanisms
+
+Enduro/X originally was developed for GNU/Linux kernels where resource polling sub-system
+i.e. epoll() can handle Posix queue handlers. This is linux non-standard feature which 
+greatly supports system development. This allows to build one queue - multiple servers
+architecture (even for ATMI server processes waiting on different queues). However, this
+this feature limits platform to be working on Linux only.
+
+[dia, epoll_message_dispatch_mode.dia, epoll_message_dispatch_mode.png, x300]
+-------------------------------
+-------------------------------
+
+Starting from Enduro/X version 3, there is support for other Posix compatible Operating
+Systems. Where possible Posix queues are used. If no Queueu support built in, for example
+Apple OSX, then emulated Posix queues are used. For these platforms, the caller processes
+does choose the queue where to send the message in round-robin mode. For each service
+shared memory contains list of server IDs providing the service. In round robin mode
+the server id is selected, and caller sends the service to queue (e.g. 'dom1,svc,TESTSVC,102'
+where '102' is server id.).
+
+[dia, poll_message_dispatch_mode.dia, poll_message_dispatch_mode.png, x450]
+-------------------------------
+-------------------------------
+
+For other unix support, mq_notify() call for each open queue is installed, by employing
+SIGUSR2. Signal handling is done in seperate thread. The main ATMI server thread is doing
+'poll()' in unnamed pipe. When event from mq_ sub-system is received, it writes the queue
+descriptor id to unnamed pipe and that makes main thread to wake up for queue processing.
+The 'poll()' for main thread supports Enduro/X extensions to add some other resource for
+polling (e.g. socket fd.)
+
+
+== Object-API
+
+Enduro/X provides Object API functions. This is meant to be used with integration into
+programming languages and frameworks, where cooperative multi-threading is used.
+This API also is suitable for systems like Node.JS where system call, e.g. C lang call
+can result in different operating system thread. This fact can cause lot of issues, 
+for example, in cooperative multi-threading two concurrent 'tpacall()' requests can
+return results for different cooperative threads, which will cause them to drop the
+response and both calls with might finish with time-out.
+
+
+Thus Enduro/X provides following header files for Object-API:
+
+- odebug.h - ATMI Object based debugging
+
+- oubf.h - ATMI Object based UBF operations
+
+- oatmi.h - ATMI operations via ATMI Object
+
+- oatmisrv.h - ATMI server operations via ATMI Object.
+
+
+The API basically consists of all UBF and ATMI functions, they are prefixed with letter 'O'
+and as first parameter all of them consume 'TPCONTEXT_T' typed parameter. Which basically is
+pointer to heap stored ATMI Object. This ATMI Object also includes links to Standard library
+and UBF library heap allocated objects.
+
+Every Object-API function basically does following:
+
+1. Set (call of 'tpsetctxt()') the current thread TLS to passed in context;
+
+2. Call the actual UBF/ATMI function;
+
+3. Unset/get (call of 'tpsetctxt()') the thread local data;
+
+
+During the Enduro/X C library works, it is assumed that is not preemptible for cooperative threads.
+Thus above scheme will work for every framework that comply with rule (and mostly it does, because
+it will break the rules of library C/C++ processing).
+
+The typical code for Object API would be following:
+
+
+--------------------------------------------------------------------------------
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <oatmi.h>
+#include <oubf.h>
+#include <odebug.h>
+#include <Exfields.h>
+
+int main(int argc, char **argv)
+{
+    int ret = 0;
+    int cd1;
+    UBFH *p_ub1;
+    long rsplen;
+    /* Allocate new context aka Object */
+    TPCONTEXT_T ctx1 = tpnewctxt();
+
+    /* Initialise client session */
+    if (SUCCEED!=Otpinit(&ctx1, NULL))
+    {
+        /* print the thread based logs */
+        ONDRX_LOG(&ctx1, log_error, "TESTERROR: Failed to Otpinit 1: %s",
+                    Otpstrerror(&ctx1, Otperrno(&ctx1)));
+        ret = -1;
+        goto out;
+    }
+
+    /*Do some client based logging */
+    ONDRX_LOG(&ctx1, log_always, "Hello from CTX1");
+
+    if (NULL==(p_ub1 = (UBFH *)Otpalloc(&ctx1, "UBF", NULL, 8192)))
+    {
+        ONDRX_LOG(&ctx1, log_error, "TESTERROR: Failed to Otpalloc ub1: %s",
+                    Otpstrerror(&ctx1, Otperrno(&ctx1)));
+        ret = -1;
+        goto out;
+    }
+
+    /* set some buffer value */
+    if (SUCCEED!=OCBchg(&ctx1, p_ub1, EX_CC_CMD, 0, "l", 0L, BFLD_STRING))
+    {
+        ONDRX_LOG(&ctx1,log_error, "TESTERROR: OCBchg() failed %s", 
+                OBstrerror(&ctx1, OBerror(&ctx1)));
+        ret = -1;
+        goto out;
+   }
+
+    /* call the server */
+    if (FAIL==Otpcall(&ctx1, "SOMESVC", (char *)p_ub1, 0L, (char **)&p_ub1, &rsplen, 0L))
+    {
+        ONDRX_LOG(&ctx1, log_error, "TESTERROR: Failed to Otpcall 1: %s", 
+                Otpstrerror(&ctx1, Otperrno(&ctx1)));
+        ret = -1;
+        goto out;
+    }
+
+    /* free the buffer */
+    Otpfree(&ctx1, (char *)p_ub1);
+
+
+    /* terminate ATMI client session */
+    if (SUCCEED!=Otpterm(&ctx1))
+    {
+        ONDRX_LOG(&ctx1, log_error, "TESTERROR: Failed to terminate client 1", 
+                Otpstrerror(&ctx1, Otperrno(&ctx1)));
+        ret = -1;
+        goto out;
+    }
+
+    /* free the NSTD/UBF/ATMI objects */
+    tpfreectxt(ctx1);
+
+out:
+    return ret;
+
+}
+--------------------------------------------------------------------------------
+
+Build with:
+--------------------------------------------------------------------------------
+$ gcc test.c  -latmi -lubf -lnstd -lpthread -lrt -lm -ldl
+--------------------------------------------------------------------------------
+
+See atmitest/test032_oapi/atmiclt32.c for more sample code.
+
+=== Class model
+
+For programming languages that supports classes or objects, following class model
+will be used for Enduro/X bindings. 
+
+[dia, class_diagram.dia, class_diagram.png, x300]
+-------------------------------
+-------------------------------
+
+This diagram is based on 'endurox-go' package, which uses structures and special
+functions that are binded to structure. Basically that is the same as classes.
+
+This model might be implemented for Node.js and Platform Script.
+
+:numbered!:
+
+[bibliography]
+Additional documentation 
+------------------------
+This section lists additional related documents.
+
+[bibliography]
+.Internet resources
+- [[[ATMI-API]]] http://docs.oracle.com/cd/E13203_01/tuxedo/tux71/html/pgint6.htm
+- [[[FML-API]]] http://docs.oracle.com/cd/E13203_01/tuxedo/tux91/fml/index.htm
+
+[glossary]
+Glossary
+--------
+This section lists
+
+[glossary]
+ATMI::
+  Application Transaction Monitor Interface
+
+UBF::
+  Unified Buffer Format it is similar API as Tuxedo's FML
+
+
+////////////////////////////////////////////////////////////////
+The index is normally left completely empty, it's contents being
+generated automatically by the DocBook toolchain.
+////////////////////////////////////////////////////////////////

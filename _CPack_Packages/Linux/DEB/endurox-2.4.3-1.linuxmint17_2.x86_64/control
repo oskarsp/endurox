@@ -1,0 +1,9 @@
+Package: endurox
+Version: 2.4.3
+Section: devel
+Priority: optional
+Architecture: amd64
+Installed-Size: 6253
+Maintainer: madars.vitolins@gmail.com
+Description: Enduro/X Middleware Platform
+

@@ -1,0 +1,128 @@
+ 6344:20161217:21004924:xadmin      :have config at slot [0] [/home/mvitolin/projects/endurox/sampleconfig]
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_APPHOME=/home/mvitolin/projects/endurox
+
+-858495136:20161217:21004925:xadmin      :test value /home/mvitolin/projects/endurox
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_CLUSTERISED=1
+
+-858495136:20161217:21004925:xadmin      :test value 1
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_CMDWAIT=1
+
+-858495136:20161217:21004925:xadmin      :test value 1
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_CONFIG=/sampleconfig/ndrxconfig.xml
+
+-858495136:20161217:21004925:xadmin      :test value /sampleconfig/ndrxconfig.xml
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_DMNLOG=/ndrxd.log
+
+-858495136:20161217:21004925:xadmin      :test value /ndrxd.log
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_DPID=/tmp/ndrxd.pid
+
+-858495136:20161217:21004925:xadmin      :test value /tmp/ndrxd.pid
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_DQMAX=100
+
+-858495136:20161217:21004925:xadmin      :test value 100
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_IPCKEY=44000
+
+-858495136:20161217:21004925:xadmin      :test value 44000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_LDBAL=0
+
+-858495136:20161217:21004925:xadmin      :test value 0
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_LEV=5
+
+-858495136:20161217:21004925:xadmin      :test value 5
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_LOG=/tmp/ndrx.log
+
+-858495136:20161217:21004925:xadmin      :test value /tmp/ndrx.log
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_MSGMAX=1000
+
+-858495136:20161217:21004925:xadmin      :test value 1000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_MSGSIZEMAX=56000
+
+-858495136:20161217:21004925:xadmin      :test value 56000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_NODEID=1
+
+-858495136:20161217:21004925:xadmin      :test value 1
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_QPATH=/tmp/mq
+
+-858495136:20161217:21004925:xadmin      :test value /tmp/mq
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_QPREFIX=/n00b
+
+-858495136:20161217:21004925:xadmin      :test value /n00b
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_RNDK=0myWI5nu
+
+-858495136:20161217:21004925:xadmin      :test value 0myWI5nu
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_SHMPATH=/dev/shm
+
+-858495136:20161217:21004925:xadmin      :test value /dev/shm
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_SRVMAX=10000
+
+-858495136:20161217:21004925:xadmin      :test value 10000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_SVCMAX=20000
+
+-858495136:20161217:21004925:xadmin      :test value 20000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_TOUT=60
+
+-858495136:20161217:21004925:xadmin      :test value 60
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_UBFMAXFLDS=16000
+
+-858495136:20161217:21004925:xadmin      :test value 16000
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_ULOG=/tmp
+
+-858495136:20161217:21004925:xadmin      :test value /tmp
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_CLOSE_STR=/tmp
+
+-858495136:20161217:21004925:xadmin      :test value /tmp
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_DRIVERLIB=libndrxxaqdiskd.so
+
+-858495136:20161217:21004925:xadmin      :test value libndrxxaqdiskd.so
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_LAZY_INIT=1
+
+-858495136:20161217:21004925:xadmin      :test value 1
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_OPEN_STR=/tmp
+
+-858495136:20161217:21004925:xadmin      :test value /tmp
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_RES_ID=1
+
+-858495136:20161217:21004925:xadmin      :test value 1
+
+-858495136:20161217:21004925:xadmin      :settings NDRX_XA_RMLIB=libndrxxaqdisk.so
+
+-858495136:20161217:21004925:xadmin      :test value libndrxxaqdisk.so
+
+-858495136:20161217:21004925:xadmin      :settings FIELDTBLS=Exfields,test.fd
+
+-858495136:20161217:21004925:xadmin      :test value Exfields,test.fd
+
+-858495136:20161217:21004925:xadmin      :settings FLDTBLDIR=/home/mvitolin/projects/endurox/ubftest/ubftab
+
+-858495136:20161217:21004925:xadmin      :test value /home/mvitolin/projects/endurox/ubftest/ubftab
+
+    0:20161217:21004925:xadmin      :returning G_cconfig 0x186fff0
+

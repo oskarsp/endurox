@@ -1,0 +1,10 @@
+10590:20170601:23593498:ndrxd       :Server process [cpmsrv], srvid 0, pid 10670 died
+10590:20170601:23593498:ndrxd       :Server process [tpbridge], srvid 0, pid 10664 died
+10590:20170601:23593499:ndrxd       :Server process [tmqueue], srvid 0, pid 10632 died
+10590:20170601:23593499:ndrxd       :Server process [tmsrv], srvid 0, pid 10620 died
+10590:20170601:23593500:ndrxd       :Server process [tmsrv], srvid 0, pid 10608 died
+10590:20170601:23593501:ndrxd       :Server process [tmsrv], srvid 0, pid 10596 died
+10590:20170601:23593501:ndrxd       :Server process [tpevsrv], srvid 0, pid 10595 died
+10590:20170601:23593501:ndrxd       :Server process [tpevsrv], srvid 0, pid 10594 died
+10590:20170601:23593501:ndrxd       :Server process [cconfsrv], srvid 0, pid 10593 died
+10590:20170601:23593501:ndrxd       :Server process [cconfsrv], srvid 0, pid 10592 died

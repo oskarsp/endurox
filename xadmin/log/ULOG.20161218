@@ -1,0 +1,618 @@
+32130:20161218:12250924:ndrxd       :Server process [cpmsrv], srvid 0, pid 32181 died
+1194427626:20161218:12250924:ndrxd       :Server process [tpbridge], srvid 0, pid 32180 died
+1194427626:20161218:12250925:ndrxd       :Server process [tmqueue], srvid 0, pid 32148 died
+1194427626:20161218:12250925:ndrxd       :Server process [tmsrv], srvid 0, pid 32136 died
+1194427626:20161218:12250926:ndrxd       :Server process [tpevsrv], srvid 0, pid 32135 died
+1194427626:20161218:12250926:ndrxd       :Server process [tpevsrv], srvid 0, pid 32134 died
+1194427626:20161218:12250926:ndrxd       :Server process [cconfsrv], srvid 0, pid 32133 died
+1194427626:20161218:12250926:ndrxd       :Server process [cconfsrv], srvid 0, pid 32132 died
+10405:20161218:14305699:ndrxd       :Server process [cpmsrv], srvid 0, pid 10456 died
+1207919850:20161218:14305700:ndrxd       :Server process [tpbridge], srvid 0, pid 10455 died
+1207919850:20161218:14305700:ndrxd       :Server process [tmqueue], srvid 0, pid 10423 died
+1207919850:20161218:14305701:ndrxd       :Server process [tmsrv], srvid 0, pid 10411 died
+1207919850:20161218:14305701:ndrxd       :Server process [tpevsrv], srvid 0, pid 10410 died
+1207919850:20161218:14305701:ndrxd       :Server process [tpevsrv], srvid 0, pid 10409 died
+1207919850:20161218:14305701:ndrxd       :Server process [cconfsrv], srvid 0, pid 10408 died
+1207919850:20161218:14305701:ndrxd       :Server process [cconfsrv], srvid 0, pid 10407 died
+12394:20161218:15421449:xadmin      :Provision script started
+1770797457:20161218:15421449:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421541:xadmin      : 1: nodeid       :Cluster node id [1]: 
+    0:20161218:15421554:xadmin      : 2: qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421567:xadmin      : 3: timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421617:xadmin      : 4: appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421620:xadmin      : 6: binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421623:xadmin      : 8: confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421626:xadmin      : 9: logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421630:xadmin      :10: ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421633:xadmin      :11: tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421636:xadmin      :12: installQ     :Configure persistent queue [y]: 
+    0:20161218:15421640:xadmin      :13: tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421643:xadmin      :14: qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421646:xadmin      :15: qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421650:xadmin      :16: qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421653:xadmin      :17: qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421656:xadmin      :18: eventSv      :Install event server [y]: 
+    0:20161218:15421660:xadmin      :19: cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421663:xadmin      :20: configSv     :Install Configuration server [y]: 
+    0:20161218:15421666:xadmin      :21: bridge       :Install bridge connection [y]: 
+    0:20161218:15421670:xadmin      :22: bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421673:xadmin      :24: ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421676:xadmin      :25: port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421680:xadmin      :26: otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421683:xadmin      :27: ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421687:xadmin      :28: ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421690:xadmin      :29: ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421693:xadmin      :30: ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421696:xadmin      :31: tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421700:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421700:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421700:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421700:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421700:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421700:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421700:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421700:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421700:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421700:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421700:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421700:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421700:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421700:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421700:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421700:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421700:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421700:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421700:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421700:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421700:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421700:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421700:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421700:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421700:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421700:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421700:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421700:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421700:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421703:xadmin      :User entered: 
+    0:20161218:15421703:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421703:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421703:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421703:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421703:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421703:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421703:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421703:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421703:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421703:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421703:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421703:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421703:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421703:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421703:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421703:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421703:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421703:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421703:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421703:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421703:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421703:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421703:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421703:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421704:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421704:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421704:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421704:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421704:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421706:xadmin      :User entered: 
+    0:20161218:15421706:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421706:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421706:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421707:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421707:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421707:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421707:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421707:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421707:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421707:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421707:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421707:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421707:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421707:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421707:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421707:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421707:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421707:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421707:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421707:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421707:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421707:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421707:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421707:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421707:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421707:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421707:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421707:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421707:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421710:xadmin      :User entered: 
+    0:20161218:15421710:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421710:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421710:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421710:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421710:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421710:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421710:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421710:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421710:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421710:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421710:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421710:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421710:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421710:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421710:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421710:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421710:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421710:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421710:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421710:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421710:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421710:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421710:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421710:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421710:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421710:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421710:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421710:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421710:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421713:xadmin      :User entered: 
+    0:20161218:15421713:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421713:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421713:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421713:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421713:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421713:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421713:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421713:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421713:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421713:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421713:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421713:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421713:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421713:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421713:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421713:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421713:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421713:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421713:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421713:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421713:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421713:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421713:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421713:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421713:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421713:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421713:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421713:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421713:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421716:xadmin      :User entered: 
+    0:20161218:15421716:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421716:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421716:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421716:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421716:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421716:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421717:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421717:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421717:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421717:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421717:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421717:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421717:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421717:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421717:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421717:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421717:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421717:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421717:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421717:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421717:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421717:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421717:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421717:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421717:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421717:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421717:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421717:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421717:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421720:xadmin      :User entered: 
+    0:20161218:15421720:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421720:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421720:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421720:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421720:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421720:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421720:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421720:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421720:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421720:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421720:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421720:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421720:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421720:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421720:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421720:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421720:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421720:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421720:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421720:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421720:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421720:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421720:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421720:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421720:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421720:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421720:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421720:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421720:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421723:xadmin      :User entered: 
+    0:20161218:15421723:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421723:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421723:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421723:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421723:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421723:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421723:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421723:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421723:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421723:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421723:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421723:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421723:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421723:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421723:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421723:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421723:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421723:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421723:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421723:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421723:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421723:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421723:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421723:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421723:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421723:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421723:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421723:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421723:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421726:xadmin      :User entered: 
+    0:20161218:15421726:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421726:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421726:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421726:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421726:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421726:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421726:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421726:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421726:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421726:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421726:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421726:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421726:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421726:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421726:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421726:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421726:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421726:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421726:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421726:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421726:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421726:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421726:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421726:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421726:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421726:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421727:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421727:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421727:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421729:xadmin      :User entered: 
+    0:20161218:15421729:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421730:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421730:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421730:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421730:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421730:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421730:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421730:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421730:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421730:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421730:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421730:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421730:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421730:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421730:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421730:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421730:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421730:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421730:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421730:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421730:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421730:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421730:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421730:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421730:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421730:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421730:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421730:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421730:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421733:xadmin      :User entered: 
+    0:20161218:15421733:xadmin      : 0: Edit qpath        :Queue device path [/dev/mqueue]: 
+    0:20161218:15421733:xadmin      : 1: Edit nodeid       :Cluster node id [1]: 
+    0:20161218:15421733:xadmin      : 2: Edit qprefix      :System code (prefix/setfile name, etc) [test1]: 
+    0:20161218:15421733:xadmin      : 3: Edit timeout      :System wide tpcall() timeout, seconds [90]: 
+    0:20161218:15421733:xadmin      : 4: Edit appHome      :Application home [/home/mvitolin/projects/endurox/xadmin]: 
+    0:20161218:15421733:xadmin      : 6: Edit binDir       :Executables/binaries sub-folder of Apphome [bin]: 
+    0:20161218:15421733:xadmin      : 8: Edit confDir      :Configuration sub-folder of Apphome [conf]: 
+    0:20161218:15421733:xadmin      : 9: Edit logDir       :Log sub-folder of Apphome [log]: 
+    0:20161218:15421733:xadmin      :10: Edit ubfDir       :Unified Buffer Format (UBF) field defs sub-folder of Apphome [ubftab]: 
+    0:20161218:15421733:xadmin      :11: Edit tempDir      :Temp sub-dir (used for pid file) [tmp]: 
+    0:20161218:15421733:xadmin      :12: Edit installQ     :Configure persistent queue [y]: 
+    0:20161218:15421733:xadmin      :13: Edit tmDir        :Transaction Manager Logs sub-folder of Apphome [tmlogs]: 
+    0:20161218:15421733:xadmin      :14: Edit qdata        :Queue data sub-folder of Apphone [qdata]: 
+    0:20161218:15421733:xadmin      :15: Edit qSpace       :Persistent queue space namme [SAMPLESPACE]: 
+    0:20161218:15421733:xadmin      :16: Edit qName        :Sample persistent queue name [TESTQ1]: 
+    0:20161218:15421733:xadmin      :17: Edit qSvc         :Target service for automatic queue for sample Q [TESTSVC1]: 
+    0:20161218:15421733:xadmin      :18: Edit eventSv      :Install event server [y]: 
+    0:20161218:15421733:xadmin      :19: Edit cpmSv        :Configure Client Process Monitor Server [y]: 
+    0:20161218:15421733:xadmin      :20: Edit configSv     :Install Configuration server [y]: 
+    0:20161218:15421733:xadmin      :21: Edit bridge       :Install bridge connection [y]: 
+    0:20161218:15421733:xadmin      :22: Edit bridgeRole   :Bridge -> Role: Active(a) or passive(p)? [a]: 
+    0:20161218:15421733:xadmin      :24: Edit ipc          :Bridge -> IP: Connect to [172.0.0.1]: 
+    0:20161218:15421734:xadmin      :25: Edit port         :Bridge -> IP: Port number [21003]: 
+    0:20161218:15421734:xadmin      :26: Edit otherNodeId  :Other cluster node id [2]: 
+    0:20161218:15421734:xadmin      :27: Edit ipckey       :IPC Key used for System V semaphores [44000]: 
+    0:20161218:15421734:xadmin      :28: Edit ldbal        :Load balance over cluster [0]: 
+    0:20161218:15421734:xadmin      :29: Edit ndrxlev      :Logging: ATMI sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421734:xadmin      :30: Edit ubflev       :Logging: UBF sub-system log level 5 - highest (debug), 0 - minimum (off) [1]: 
+    0:20161218:15421734:xadmin      :31: Edit tplev        :Logging: /user sub-system log level 5 - highest (debug), 0 - minimum (off) [5]: 
+    0:20161218:15421843:xadmin      :User entered: 92
+    0:20161218:15421843:xadmin      :Accepted
+    0:20161218:15421843:xadmin      :ndrxconfig: [/home/mvitolin/projects/endurox/xadmin/conf/ndrxconfig.xml]
+    0:20161218:15421843:xadmin      :appini: [/home/mvitolin/projects/endurox/xadmin/conf/app.ini]
+    0:20161218:15421843:xadmin      :setfile: [/home/mvitolin/projects/endurox/xadmin/conf/settest1]
+    0:20161218:15421843:xadmin      :About to create folders
+    0:20161218:15421843:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/bin]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/conf]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/log]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/ubftab]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/tmp]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/tmlogs]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/tmlogs]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/tmlogs/rm1]
+    0:20161218:15421844:xadmin      :Creating: [/home/mvitolin/projects/endurox/xadmin/qdata]
+    0:20161218:15421844:xadmin      :Writting off [/home/mvitolin/projects/endurox/xadmin/conf/ndrxconfig.xml] with [<?xml version="1.0" ?>
+<endurox>
+	<!--
+		*** For more info see ndrxconfig.xml(5) man page. ***
+	-->
+	<appconfig>
+	
+		<!-- 
+			ALL BELLOW ONES USES <sanity> periodical timer  -->
+			Sanity check time, sec
+		-->
+		<sanity>5</sanity>
+		
+		<!--
+			Seconds in which we should send service refresh to other node.
+		-->
+		<brrefresh>6</brrefresh>
+		
+		<!-- 
+			Do process reset after 1 sec 
+		-->
+		<restart_min>1</restart_min>
+		
+		<!-- 
+			If restart fails, then boot after +5 sec of previous wait time
+		-->
+		<restart_step>1</restart_step>
+		
+		<!-- 
+			If still not started, then max boot time is a 30 sec. 
+		-->
+		<restart_max>5</restart_max>
+		
+		<!--  
+			<sanity> timer, usage end
+		-->
+		
+		<!-- 
+		Time (seconds) after attach when program will start do sanity & respawn checks,
+		starts counting after configuration load 
+		-->
+		<restart_to_check>20</restart_to_check>
+		
+		
+		<!-- 
+			Setting for pq command, should ndrxd collect service 
+			queue stats automatically If set to Y or y, 
+			then queue stats are on. Default is off.
+		-->
+		<gather_pq_stats>Y</gather_pq_stats>
+		
+	</appconfig>
+	<defaults>
+	
+		<min>1</min>
+		<max>2</max>
+		
+		<!-- 
+			Kill the process which have not started in <start_max> time
+		-->
+		<autokill>1</autokill>
+		
+		<!-- 
+			The maximum time while process can hang in 'starting' state i.e.
+			have not completed initialization, sec X <= 0 = disabled  
+		-->
+		<start_max>2</start_max>
+		
+		<!--
+			Ping server in every X seconds (step is <sanity>).
+		-->
+		<pingtime>10</pingtime>
+		
+		<!--
+			Max time in seconds in which server must respond.
+			The granularity is sanity time.
+			X <= 0 = disabled 
+		-->
+		<ping_max>40</ping_max>
+		
+		<!--
+			Max time to wait until process should exit on shutdown
+			X <= 0 = disabled 
+		-->
+		<end_max>30</end_max>
+		
+		<!-- 
+			Interval, in seconds, by which signal sequence -2, -15, -9, -9.... will be sent
+			to process until it have been terminated.
+		-->
+		<killtime>1</killtime>
+		
+	</defaults>
+	<servers>
+		<server name="cconfsrv">
+			<min>2</min>
+			<max>2</max>
+			<srvid>1</srvid>
+			<sysopt>-e ${NDRX_APPHOME}/log/cconfsrv.log -r</sysopt>
+		</server>
+		<server name="tpevsrv">
+			<min>2</min>
+			<max>2</max>
+			<srvid>20</srvid>
+			<sysopt>-e ${NDRX_APPHOME}/log/tpevsrv.log -r</sysopt>
+		</server>
+		<server name="tmsrv">
+			<max>3</max>
+			<max>3</max>
+			<srvid>40</srvid>
+			<cctag>RM1TMQ</cctag>
+			<sysopt>-e ${NDRX_APPHOME}/log/tmsrv-rm1.log -r -- -t1 -l${NDRX_APPHOME}/tmlogs/rm1</sysopt>
+		</server>
+		<server name="tmqueue">
+			<min>1</min>
+			<max>1</max>
+			<srvid>60</srvid>
+			<cctag>RM1TMQ</cctag>
+			<sysopt>-e ${NDRX_APPHOME}/log/tmqueue-rm1.log -r -- -m SAMPLESPACE -s1</sysopt>
+		</server>
+		<server name="tpbridge">
+			<min>1</min>
+			<max>1</max>
+			<srvid>150</srvid>
+			<sysopt>-e ${NDRX_APPHOME}/log/tpbridge_2.log -r</sysopt>
+			<appopt>-f -n2 -r -i 172.0.0.1 -p 21003 -tA -z30</appopt>
+		</server>
+		<server name="cpmsrv">
+			<min>1</min>
+			<max>1</max>
+			<srvid>9999</srvid>
+			<sysopt>-e ${NDRX_APPHOME}/log/cpmsrv.log -r -- -k3 -i1</sysopt>
+		</server>
+	</servers>
+	<!-- 
+		Client section 
+	-->
+	<clients>
+		<!--
+			Test parameter passing to process 
+			- To list clients:$ xadmin pc
+			- To stop client: $ xadmin sc -t TAG1 -s SUBSECTION1
+			- To boot client: $ xadmin bc -t TAG1 -s SUBSECTION1
+		-->
+		<client cmdline="your_test_binary.sh -t ${NDRX_CLTTAG} -s ${NDRX_CLTSUBSECT}">
+			<exec tag="TAG1" subsect="SUBSECTION1" autostart="Y" log="${NDRX_APPHOME}/log/testbin-1.log"/>
+			<exec tag="TAG2" subsect="SUBSECTION2" autostart="Y" log="${NDRX_APPHOME}/log/testbin-3.log"/>
+		</client>
+		<client cmdline="your_test_binary2.sh -t ${NDRX_CLTTAG}">
+			<exec tag="TAG3" autostart="Y" log="${NDRX_APPHOME}/log/testbin2-1.log"/>
+		</client>
+	</clients>
+</endurox>
+]
+    0:20161218:15421844:xadmin      :Writting off [/home/mvitolin/projects/endurox/xadmin/conf/app.ini] with [
+[@global]
+NDRX_CLUSTERISED=1
+NDRX_CMDWAIT=1
+NDRX_CONFIG=${NDRX_APPHOME}/conf/ndrxconfig.xml
+NDRX_DMNLOG=${NDRX_APPHOME}/log/ndrxd.log
+NDRX_DPID=${NDRX_APPHOME}/tmp/ndrxd.pid
+NDRX_DQMAX=100
+NDRX_IPCKEY=44000
+NDRX_LDBAL=0
+NDRX_LEV=5
+NDRX_LOG=${NDRX_APPHOME}/log/xadmin.log
+NDRX_MSGMAX=1000
+NDRX_MSGSIZEMAX=56000
+NDRX_NODEID=1
+NDRX_QPATH=/dev/mqueue
+NDRX_QPREFIX=/test1
+NDRX_RNDK=0myWI5nu
+NDRX_SRVMAX=10000
+NDRX_SVCMAX=20000
+NDRX_TOUT=90
+NDRX_UBFMAXFLDS=16000
+NDRX_ULOG=${NDRX_APPHOME}/log
+FIELDTBLS=Exfields
+FLDTBLDIR=${NDRX_APPHOME}/ubftab
+
+; Environment for Tranactional Queue
+[@global/RM1TMQ]
+NDRX_XA_RES_ID=1
+NDRX_XA_OPEN_STR=${NDRX_APPHOME}/qdata
+NDRX_XA_CLOSE_STR=${NDRX_APPHOME}/qdata
+NDRX_XA_DRIVERLIB=libndrxxaqdisks.so
+; dylib needed for osx
+NDRX_XA_RMLIB=libndrxxaqdisk.so
+NDRX_XA_LAZY_INIT=0
+
+[@debug]
+; * - goes for all binaries not listed bellow
+*= ndrx=5 ubf=1 tp=5 file=${NDRX_APPHOME}/log/endurox-common.log
+xadmin= ndrx=5 ubf=1 tp=5 file=${NDRX_APPHOME}/log/xadmin.log
+ndrxd= ndrx=5 ubf=1 tp=5 file=${NDRX_APPHOME}/log/ndrxd.log
+
+; Queue defintions goes here, see man q.conf(5) for syntax
+[@queue]
+; Default manual queue (reserved name '@'), unknown queues are created based on this template:
+@=svcnm=-,autoq=n,waitinit=0,waitretry=0,waitretryinc=0,waitretrymax=0,memonly=n,mode=fifo
+
+[@queue/RM1TMQ]
+; Sample queue (this one is automatic, sends messages to target service)
+TESTQ1=svcnm=TESTSVC1,autoq=y,tries=3,waitinit=1,waitretry=1,waitretryinc=2,waitretrymax=5,memonly=n,mode=fifo
+]
+    0:20161218:15421844:xadmin      :Writting off [/home/mvitolin/projects/endurox/xadmin/conf/settest1] with [#/bin/bash
+#
+# @(#) Load this script in environment
+#
+export NDRX_APPHOME=/home/mvitolin/projects/endurox/xadmin
+export NDRX_CCONFIG=$NDRX_APPHOME/conf
+export PATH=$PATH:$NDRX_APPHOME/bin
+export CDPATH=$NDRX_APPHOME
+]
+    0:20161218:15421844:xadmin      :Setting 755 to [/home/mvitolin/projects/endurox/xadmin/conf/settest1]
+    0:20161218:15421844:xadmin      :Provision succeed!
+19664:20161218:17094700:ndrxd       :Client process [tmsrv], pid 32136 died
+    0:20161218:17094700:ndrxd       :Client process [tmsrv], pid 10411 died
+    0:20161218:17094700:ndrxd       :Client process [tmqueue], pid 32148 died
+-960826134:20161218:17391609:ndrxd       :Server process [cpmsrv], srvid 0, pid 19715 died
+-960826134:20161218:17391609:ndrxd       :Server process [tpbridge], srvid 0, pid 19714 died
+-960826134:20161218:17391609:ndrxd       :Server process [tmqueue], srvid 0, pid 19682 died
+-960826134:20161218:17391609:ndrxd       :Server process [tmsrv], srvid 0, pid 19670 died
+-960826134:20161218:17391609:ndrxd       :Server process [tpevsrv], srvid 0, pid 19669 died
+-960826134:20161218:17391609:ndrxd       :Server process [tpevsrv], srvid 0, pid 19668 died
+-960826134:20161218:17391609:ndrxd       :Server process [cconfsrv], srvid 0, pid 19667 died
+-960826134:20161218:17391610:ndrxd       :Server process [cconfsrv], srvid 0, pid 19666 died

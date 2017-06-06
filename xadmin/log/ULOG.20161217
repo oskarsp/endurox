@@ -1,0 +1,246 @@
+11828:20161217:21320113:tmsrv       :tpsvrinit() fail
+11717:20161217:21320113:ndrxd       :Server process [tmsrv], srvid 0, pid 11828 died
+11829:20161217:21320115:tmqueue     :tpsvrinit() fail
+11717:20161217:21320115:ndrxd       :Server process [tmqueue], srvid 0, pid 11829 died
+    0:20161217:21320500:ndrxd       :Client process [tmqueue], pid 11829 died
+11873:20161217:21321501:tmsrv       :tpsvrinit() fail
+    0:20161217:21321501:ndrxd       :Server process [tmsrv], srvid 0, pid 11873 died
+11874:20161217:21321501:tmqueue     :tpsvrinit() fail
+    0:20161217:21321501:ndrxd       :Server process [tmqueue], srvid 0, pid 11874 died
+    0:20161217:21322100:ndrxd       :Client process [tmqueue], pid 11874 died
+11950:20161217:21323601:tmsrv       :tpsvrinit() fail
+    0:20161217:21323601:ndrxd       :Server process [tmsrv], srvid 0, pid 11950 died
+11951:20161217:21323601:tmqueue     :tpsvrinit() fail
+    0:20161217:21323601:ndrxd       :Server process [tmqueue], srvid 0, pid 11951 died
+    0:20161217:21324100:ndrxd       :Client process [tmqueue], pid 11951 died
+12045:20161217:21330201:tmsrv       :tpsvrinit() fail
+    0:20161217:21330201:ndrxd       :Server process [tmsrv], srvid 0, pid 12045 died
+12046:20161217:21330201:tmqueue     :tpsvrinit() fail
+    0:20161217:21330201:ndrxd       :Server process [tmqueue], srvid 0, pid 12046 died
+    0:20161217:21330800:ndrxd       :Client process [tmqueue], pid 12046 died
+12145:20161217:21333301:tmsrv       :tpsvrinit() fail
+    0:20161217:21333301:ndrxd       :Server process [tmsrv], srvid 0, pid 12145 died
+12146:20161217:21333301:tmqueue     :tpsvrinit() fail
+    0:20161217:21333301:ndrxd       :Server process [tmqueue], srvid 0, pid 12146 died
+    0:20161217:21333900:ndrxd       :Client process [tmqueue], pid 12146 died
+12242:20161217:21340501:tmsrv       :tpsvrinit() fail
+    0:20161217:21340501:ndrxd       :Server process [tmsrv], srvid 0, pid 12242 died
+12243:20161217:21340501:tmqueue     :tpsvrinit() fail
+    0:20161217:21340501:ndrxd       :Server process [tmqueue], srvid 0, pid 12243 died
+    0:20161217:21341100:ndrxd       :Client process [tmqueue], pid 12243 died
+12375:20161217:21343601:tmsrv       :tpsvrinit() fail
+    0:20161217:21343601:ndrxd       :Server process [tmsrv], srvid 0, pid 12375 died
+12376:20161217:21343601:tmqueue     :tpsvrinit() fail
+    0:20161217:21343601:ndrxd       :Server process [tmqueue], srvid 0, pid 12376 died
+    0:20161217:21344100:ndrxd       :Client process [tmqueue], pid 12376 died
+12471:20161217:21350601:tmsrv       :tpsvrinit() fail
+    0:20161217:21350601:ndrxd       :Server process [tmsrv], srvid 0, pid 12471 died
+12472:20161217:21350601:tmqueue     :tpsvrinit() fail
+    0:20161217:21350601:ndrxd       :Server process [tmqueue], srvid 0, pid 12472 died
+    0:20161217:21351101:ndrxd       :Client process [tmqueue], pid 12472 died
+12589:20161217:21353701:tmsrv       :tpsvrinit() fail
+    0:20161217:21353701:ndrxd       :Server process [tmsrv], srvid 0, pid 12589 died
+12590:20161217:21353701:tmqueue     :tpsvrinit() fail
+    0:20161217:21353701:ndrxd       :Server process [tmqueue], srvid 0, pid 12590 died
+    0:20161217:21354300:ndrxd       :Client process [tmqueue], pid 12590 died
+-1805568790:20161217:21360846:ndrxd       :Server process [cpmsrv], srvid 0, pid 11831 died
+-1805568790:20161217:21360846:ndrxd       :Server process [tpbridge], srvid 0, pid 11830 died
+-1805568790:20161217:21360846:ndrxd       :Server process [tpevsrv], srvid 0, pid 11827 died
+-1805568790:20161217:21360846:ndrxd       :Server process [tpevsrv], srvid 0, pid 11826 died
+-1805568790:20161217:21360846:ndrxd       :Server process [cconfsrv], srvid 0, pid 11825 died
+-1805568790:20161217:21360847:ndrxd       :Server process [cconfsrv], srvid 0, pid 11824 died
+12772:20161217:21365164:tmsrv       :tpsvrinit() fail
+12766:20161217:21365164:ndrxd       :Server process [tmsrv], srvid 0, pid 12772 died
+12773:20161217:21365165:tmqueue     :tpsvrinit() fail
+12766:20161217:21365166:ndrxd       :Server process [tmqueue], srvid 0, pid 12773 died
+    0:20161217:21365700:ndrxd       :Client process [tmqueue], pid 12773 died
+12831:20161217:21370701:tmsrv       :tpsvrinit() fail
+    0:20161217:21370701:ndrxd       :Server process [tmsrv], srvid 0, pid 12831 died
+12832:20161217:21370701:tmqueue     :tpsvrinit() fail
+    0:20161217:21370702:ndrxd       :Server process [tmqueue], srvid 0, pid 12832 died
+    0:20161217:21371300:ndrxd       :Client process [tmqueue], pid 12832 died
+12904:20161217:21372801:tmsrv       :tpsvrinit() fail
+    0:20161217:21372801:ndrxd       :Server process [tmsrv], srvid 0, pid 12904 died
+12905:20161217:21372802:tmqueue     :tpsvrinit() fail
+    0:20161217:21372802:ndrxd       :Server process [tmqueue], srvid 0, pid 12905 died
+    0:20161217:21373400:ndrxd       :Client process [tmqueue], pid 12905 died
+13008:20161217:21375401:tmsrv       :tpsvrinit() fail
+    0:20161217:21375401:ndrxd       :Server process [tmsrv], srvid 0, pid 13008 died
+13009:20161217:21375402:tmqueue     :tpsvrinit() fail
+    0:20161217:21375402:ndrxd       :Server process [tmqueue], srvid 0, pid 13009 died
+    0:20161217:21380000:ndrxd       :Client process [tmqueue], pid 13009 died
+13210:20161217:21382501:tmsrv       :tpsvrinit() fail
+    0:20161217:21382501:ndrxd       :Server process [tmsrv], srvid 0, pid 13210 died
+13211:20161217:21382501:tmqueue     :tpsvrinit() fail
+    0:20161217:21382501:ndrxd       :Server process [tmqueue], srvid 0, pid 13211 died
+    0:20161217:21383100:ndrxd       :Client process [tmqueue], pid 13211 died
+13344:20161217:21385601:tmsrv       :tpsvrinit() fail
+    0:20161217:21385601:ndrxd       :Server process [tmsrv], srvid 0, pid 13344 died
+13345:20161217:21385601:tmqueue     :tpsvrinit() fail
+    0:20161217:21385601:ndrxd       :Server process [tmqueue], srvid 0, pid 13345 died
+    0:20161217:21390100:ndrxd       :Client process [tmqueue], pid 13345 died
+13446:20161217:21392701:tmsrv       :tpsvrinit() fail
+    0:20161217:21392701:ndrxd       :Server process [tmsrv], srvid 0, pid 13446 died
+13447:20161217:21392701:tmqueue     :tpsvrinit() fail
+    0:20161217:21392701:ndrxd       :Server process [tmqueue], srvid 0, pid 13447 died
+    0:20161217:21393300:ndrxd       :Client process [tmqueue], pid 13447 died
+-1368804118:20161217:21394942:ndrxd       :Server process [cpmsrv], srvid 0, pid 12775 died
+-1368804118:20161217:21394942:ndrxd       :Server process [tpbridge], srvid 0, pid 12774 died
+-1368804118:20161217:21394942:ndrxd       :Server process [tpevsrv], srvid 0, pid 12771 died
+-1368804118:20161217:21394942:ndrxd       :Server process [tpevsrv], srvid 0, pid 12770 died
+-1368804118:20161217:21394942:ndrxd       :Server process [cconfsrv], srvid 0, pid 12769 died
+-1368804118:20161217:21394942:ndrxd       :Server process [cconfsrv], srvid 0, pid 12768 died
+13549:20161217:21395170:tmsrv       :tpsvrinit() fail
+13543:20161217:21395170:ndrxd       :Server process [tmsrv], srvid 0, pid 13549 died
+13550:20161217:21395172:tmqueue     :tpsvrinit() fail
+13543:20161217:21395172:ndrxd       :Server process [tmqueue], srvid 0, pid 13550 died
+    0:20161217:21395700:ndrxd       :Client process [tmqueue], pid 13550 died
+13625:20161217:21400701:tmsrv       :tpsvrinit() fail
+    0:20161217:21400701:ndrxd       :Server process [tmsrv], srvid 0, pid 13625 died
+13626:20161217:21400701:tmqueue     :tpsvrinit() fail
+    0:20161217:21400701:ndrxd       :Server process [tmqueue], srvid 0, pid 13626 died
+    0:20161217:21401200:ndrxd       :Client process [tmqueue], pid 13626 died
+14075:20161217:21402701:tmsrv       :tpsvrinit() fail
+    0:20161217:21402701:ndrxd       :Server process [tmsrv], srvid 0, pid 14075 died
+14076:20161217:21402701:tmqueue     :tpsvrinit() fail
+    0:20161217:21402701:ndrxd       :Server process [tmqueue], srvid 0, pid 14076 died
+    0:20161217:21403200:ndrxd       :Client process [tmqueue], pid 14076 died
+14524:20161217:21405201:tmsrv       :tpsvrinit() fail
+    0:20161217:21405201:ndrxd       :Server process [tmsrv], srvid 0, pid 14524 died
+14525:20161217:21405201:tmqueue     :tpsvrinit() fail
+    0:20161217:21405201:ndrxd       :Server process [tmqueue], srvid 0, pid 14525 died
+    0:20161217:21405700:ndrxd       :Client process [tmqueue], pid 14525 died
+14627:20161217:21412201:tmsrv       :tpsvrinit() fail
+    0:20161217:21412201:ndrxd       :Server process [tmsrv], srvid 0, pid 14627 died
+14628:20161217:21412201:tmqueue     :tpsvrinit() fail
+    0:20161217:21412201:ndrxd       :Server process [tmqueue], srvid 0, pid 14628 died
+    0:20161217:21412700:ndrxd       :Client process [tmqueue], pid 14628 died
+14739:20161217:21415301:tmsrv       :tpsvrinit() fail
+14740:20161217:21415301:tmqueue     :tpsvrinit() fail
+    0:20161217:21415301:ndrxd       :Server process [tmsrv], srvid 0, pid 14739 died
+    0:20161217:21415301:ndrxd       :Server process [tmqueue], srvid 0, pid 14740 died
+    0:20161217:21415800:ndrxd       :Client process [tmqueue], pid 14740 died
+14851:20161217:21422401:tmsrv       :tpsvrinit() fail
+    0:20161217:21422401:ndrxd       :Server process [tmsrv], srvid 0, pid 14851 died
+14852:20161217:21422402:tmqueue     :tpsvrinit() fail
+    0:20161217:21422402:ndrxd       :Server process [tmqueue], srvid 0, pid 14852 died
+    0:20161217:21423000:ndrxd       :Client process [tmqueue], pid 14852 died
+14981:20161217:21425601:tmsrv       :tpsvrinit() fail
+    0:20161217:21425601:ndrxd       :Server process [tmsrv], srvid 0, pid 14981 died
+14982:20161217:21425602:tmqueue     :tpsvrinit() fail
+    0:20161217:21425602:ndrxd       :Server process [tmqueue], srvid 0, pid 14982 died
+    0:20161217:21430200:ndrxd       :Client process [tmqueue], pid 14982 died
+15043:20161217:21430862:tmsrv       :tpsvrinit() fail
+13543:20161217:21430862:ndrxd       :Server process [tmsrv], srvid 0, pid 15043 died
+15044:20161217:21430863:tmqueue     :tpsvrinit() fail
+13543:20161217:21430863:ndrxd       :Server process [tmqueue], srvid 0, pid 15044 died
+-1543666454:20161217:21431128:ndrxd       :Server process [cpmsrv], srvid 0, pid 13552 died
+-1543666454:20161217:21431129:ndrxd       :Server process [tpbridge], srvid 0, pid 13551 died
+-1543666454:20161217:21431129:ndrxd       :Server process [tpevsrv], srvid 0, pid 13548 died
+-1543666454:20161217:21431129:ndrxd       :Server process [tpevsrv], srvid 0, pid 13547 died
+-1543666454:20161217:21431129:ndrxd       :Server process [cconfsrv], srvid 0, pid 13546 died
+-1543666454:20161217:21431129:ndrxd       :Server process [cconfsrv], srvid 0, pid 13545 died
+15062:20161217:21431414:tmsrv       :tpsvrinit() fail
+15056:20161217:21431414:ndrxd       :Server process [tmsrv], srvid 0, pid 15062 died
+15063:20161217:21431415:tmqueue     :tpsvrinit() fail
+15056:20161217:21431415:ndrxd       :Server process [tmqueue], srvid 0, pid 15063 died
+    0:20161217:21432000:ndrxd       :Client process [tmqueue], pid 15063 died
+    0:20161217:21432000:ndrxd       :Client process [tmqueue], pid 15044 died
+15134:20161217:21433101:tmsrv       :tpsvrinit() fail
+    0:20161217:21433101:ndrxd       :Server process [tmsrv], srvid 0, pid 15134 died
+15135:20161217:21433101:tmqueue     :tpsvrinit() fail
+    0:20161217:21433101:ndrxd       :Server process [tmqueue], srvid 0, pid 15135 died
+    0:20161217:21433600:ndrxd       :Client process [tmqueue], pid 15135 died
+15200:20161217:21435101:tmsrv       :tpsvrinit() fail
+    0:20161217:21435101:ndrxd       :Server process [tmsrv], srvid 0, pid 15200 died
+15201:20161217:21435101:tmqueue     :tpsvrinit() fail
+    0:20161217:21435101:ndrxd       :Server process [tmqueue], srvid 0, pid 15201 died
+    0:20161217:21435600:ndrxd       :Client process [tmqueue], pid 15201 died
+-249953046:20161217:21441292:ndrxd       :Server process [cpmsrv], srvid 0, pid 15065 died
+-249953046:20161217:21441292:ndrxd       :Server process [tpbridge], srvid 0, pid 15064 died
+-249953046:20161217:21441293:ndrxd       :Server process [tpevsrv], srvid 0, pid 15061 died
+-249953046:20161217:21441293:ndrxd       :Server process [tpevsrv], srvid 0, pid 15060 died
+-249953046:20161217:21441293:ndrxd       :Server process [cconfsrv], srvid 0, pid 15059 died
+-249953046:20161217:21441293:ndrxd       :Server process [cconfsrv], srvid 0, pid 15058 died
+15374:20161217:21441669:tmsrv       :tpsvrinit() fail
+15368:20161217:21441669:ndrxd       :Server process [tmsrv], srvid 0, pid 15374 died
+15375:20161217:21441670:tmqueue     :tpsvrinit() fail
+15368:20161217:21441670:ndrxd       :Server process [tmqueue], srvid 0, pid 15375 died
+    0:20161217:21442200:ndrxd       :Client process [tmqueue], pid 15375 died
+15435:20161217:21443201:tmsrv       :tpsvrinit() fail
+    0:20161217:21443201:ndrxd       :Server process [tmsrv], srvid 0, pid 15435 died
+15436:20161217:21443201:tmqueue     :tpsvrinit() fail
+    0:20161217:21443201:ndrxd       :Server process [tmqueue], srvid 0, pid 15436 died
+    0:20161217:21443700:ndrxd       :Client process [tmqueue], pid 15436 died
+-1333840662:20161217:21443905:ndrxd       :Server process [cpmsrv], srvid 0, pid 15377 died
+-1333840662:20161217:21443905:ndrxd       :Server process [tpbridge], srvid 0, pid 15376 died
+-1333840662:20161217:21443905:ndrxd       :Server process [tpevsrv], srvid 0, pid 15373 died
+-1333840662:20161217:21443906:ndrxd       :Server process [tpevsrv], srvid 0, pid 15372 died
+-1333840662:20161217:21443906:ndrxd       :Server process [cconfsrv], srvid 0, pid 15371 died
+-1333840662:20161217:21443906:ndrxd       :Server process [cconfsrv], srvid 0, pid 15370 died
+15472:20161217:21444602:tmsrv       :tpsvrinit() fail
+15466:20161217:21444602:ndrxd       :Server process [tmsrv], srvid 0, pid 15472 died
+15473:20161217:21444603:tmqueue     :tpsvrinit() fail
+15466:20161217:21444603:ndrxd       :Server process [tmqueue], srvid 0, pid 15473 died
+    0:20161217:21445100:ndrxd       :Client process [tmqueue], pid 15473 died
+15552:20161217:21450101:tmsrv       :tpsvrinit() fail
+    0:20161217:21450101:ndrxd       :Server process [tmsrv], srvid 0, pid 15552 died
+15553:20161217:21450101:tmqueue     :tpsvrinit() fail
+    0:20161217:21450101:ndrxd       :Server process [tmqueue], srvid 0, pid 15553 died
+-1864055574:20161217:21450575:ndrxd       :Server process [cpmsrv], srvid 0, pid 15475 died
+-1864055574:20161217:21450575:ndrxd       :Server process [tpbridge], srvid 0, pid 15474 died
+-1864055574:20161217:21450575:ndrxd       :Server process [tpevsrv], srvid 0, pid 15471 died
+-1864055574:20161217:21450575:ndrxd       :Server process [tpevsrv], srvid 0, pid 15470 died
+-1864055574:20161217:21450575:ndrxd       :Server process [cconfsrv], srvid 0, pid 15469 died
+-1864055574:20161217:21450576:ndrxd       :Server process [cconfsrv], srvid 0, pid 15468 died
+15581:20161217:21450769:tmsrv       :tpsvrinit() fail
+15575:20161217:21450769:ndrxd       :Server process [tmsrv], srvid 0, pid 15581 died
+15582:20161217:21450770:tmqueue     :tpsvrinit() fail
+15575:20161217:21450770:ndrxd       :Server process [tmqueue], srvid 0, pid 15582 died
+    0:20161217:21451300:ndrxd       :Client process [tmqueue], pid 15582 died
+    0:20161217:21451300:ndrxd       :Client process [tmqueue], pid 15553 died
+15672:20161217:21452302:tmsrv       :tpsvrinit() fail
+15673:20161217:21452302:tmqueue     :tpsvrinit() fail
+    0:20161217:21452302:ndrxd       :Server process [tmsrv], srvid 0, pid 15672 died
+    0:20161217:21452302:ndrxd       :Server process [tmqueue], srvid 0, pid 15673 died
+    0:20161217:21452900:ndrxd       :Client process [tmqueue], pid 15673 died
+15738:20161217:21454401:tmsrv       :tpsvrinit() fail
+    0:20161217:21454401:ndrxd       :Server process [tmsrv], srvid 0, pid 15738 died
+15739:20161217:21454402:tmqueue     :tpsvrinit() fail
+    0:20161217:21454402:ndrxd       :Server process [tmqueue], srvid 0, pid 15739 died
+    0:20161217:21455000:ndrxd       :Client process [tmqueue], pid 15739 died
+1262150890:20161217:21462150:ndrxd       :Server process [cpmsrv], srvid 0, pid 15584 died
+1262150890:20161217:21462150:ndrxd       :Server process [tpbridge], srvid 0, pid 15583 died
+1262150890:20161217:21462150:ndrxd       :Server process [tmqueue], srvid 0, pid 15834 died
+1262150890:20161217:21462151:ndrxd       :Server process [tmsrv], srvid 0, pid 15833 died
+1262150890:20161217:21462151:ndrxd       :Server process [tpevsrv], srvid 0, pid 15580 died
+1262150890:20161217:21462151:ndrxd       :Server process [tpevsrv], srvid 0, pid 15579 died
+1262150890:20161217:21462151:ndrxd       :Server process [cconfsrv], srvid 0, pid 15578 died
+1262150890:20161217:21462151:ndrxd       :Server process [cconfsrv], srvid 0, pid 15577 died
+15923:20161217:21462900:ndrxd       :Client process [tmsrv], pid 15833 died
+-661064470:20161217:21504878:ndrxd       :Server process [cpmsrv], srvid 0, pid 15974 died
+-661064470:20161217:21504879:ndrxd       :Server process [tpbridge], srvid 0, pid 15973 died
+-661064470:20161217:21504879:ndrxd       :Server process [tmqueue], srvid 0, pid 15941 died
+-661064470:20161217:21504879:ndrxd       :Server process [tmsrv], srvid 0, pid 15929 died
+-661064470:20161217:21504879:ndrxd       :Server process [tpevsrv], srvid 0, pid 15928 died
+-661064470:20161217:21504880:ndrxd       :Server process [tpevsrv], srvid 0, pid 15927 died
+-661064470:20161217:21504880:ndrxd       :Server process [cconfsrv], srvid 0, pid 15926 died
+-661064470:20161217:21504880:ndrxd       :Server process [cconfsrv], srvid 0, pid 15925 died
+18029:20161217:21510100:ndrxd       :Client process [tmsrv], pid 15929 died
+    0:20161217:21535438:ndrxd       :Server process [cpmsrv], srvid 0, pid 18080 died
+-445459222:20161217:21535439:ndrxd       :Server process [tpbridge], srvid 0, pid 18079 died
+-445459222:20161217:21535439:ndrxd       :Server process [tmqueue], srvid 0, pid 18047 died
+-445459222:20161217:21535439:ndrxd       :Server process [tmsrv], srvid 0, pid 18035 died
+-445459222:20161217:21535439:ndrxd       :Server process [tpevsrv], srvid 0, pid 18034 died
+-445459222:20161217:21535440:ndrxd       :Server process [tpevsrv], srvid 0, pid 18033 died
+-445459222:20161217:21535440:ndrxd       :Server process [cconfsrv], srvid 0, pid 18032 died
+-445459222:20161217:21535440:ndrxd       :Server process [cconfsrv], srvid 0, pid 18031 died
+19813:20161217:21541900:ndrxd       :Client process [tmsrv], pid 18035 died
+1549190378:20161217:21563768:ndrxd       :Server process [cpmsrv], srvid 0, pid 19865 died
+1549190378:20161217:21563769:ndrxd       :Server process [tpbridge], srvid 0, pid 19864 died
+1549190378:20161217:21563769:ndrxd       :Server process [tmqueue], srvid 0, pid 19832 died
+1549190378:20161217:21563770:ndrxd       :Server process [tmsrv], srvid 0, pid 19820 died
+1549190378:20161217:21563770:ndrxd       :Server process [tpevsrv], srvid 0, pid 19819 died
+1549190378:20161217:21563770:ndrxd       :Server process [tpevsrv], srvid 0, pid 19818 died
+1549190378:20161217:21563770:ndrxd       :Server process [cconfsrv], srvid 0, pid 19817 died
+1549190378:20161217:21563770:ndrxd       :Server process [cconfsrv], srvid 0, pid 19816 died

@@ -1,0 +1,151 @@
+31878:20161226:12011187:xadmin      :Got config defaults for provision: [-vnodeid=2]
+1482504112:20161226:12011187:xadmin      :Provision script started
+1504074129:20161226:12011187:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+1482418438:20161226:12011365:xadmin      : 1: nodeid       :Cluster node id [2]: 
+1482418438:20161226:12011446:xadmin      : 2: qprefix      :System code (prefix/setfile name, etc) [test1]: 
+1482418438:20161226:12011467:xadmin      : 3: timeout      :System wide tpcall() timeout, seconds [90]: 
+1482418438:20161226:12011484:xadmin      : 4: appHome      :Application home [/home/mvitolin/projects/endurox]: 
+ 5643:20161226:14114556:xadmin      :Got config defaults for provision: [-vnodeid=2]
+-1848866896:20161226:14114557:xadmin      :Provision script started
+-1827296879:20161226:14114557:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+ 6992:20161226:14210426:xadmin      :Got config defaults for provision: [-vnodeid=2]
+-163358800:20161226:14210426:xadmin      :Provision script started
+-141788783:20161226:14210426:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+ 9703:20161226:14231545:xadmin      :Got config defaults for provision: [-vnodeid=2]
+-116955216:20161226:14231545:xadmin      :Provision script started
+-95385199:20161226:14231545:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+10293:20161226:14233282:xadmin      :Got config defaults for provision: [-vnodeid=2]
+-1691437136:20161226:14233282:xadmin      :Provision script started
+-1669867119:20161226:14233282:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+23279:20161226:15132646:xadmin      :Generate go server
+3074449:20161226:15132647:xadmin      : 0: svname       :XATMI Server Name (binary) [testsv]: 
+-18581242:20161226:15132984:xadmin      : 1: svcname      :Service name [TESTSVC]: 
+-18581242:20161226:15132996:xadmin      : 2: useubf       :Use UBF? [y]: 
+-18581242:20161226:15133035:xadmin      : 3: ubfname      :UBF package name [ubftab]: 
+-18581242:20161226:15133422:xadmin      : 4: genmake      :Gen makefile [y]: 
+-18581242:20161226:15133488:xadmin      : 0: Edit svname       :XATMI Server Name (binary) [testsv]: 
+-18581242:20161226:15133488:xadmin      : 1: Edit svcname      :Service name [TESTSVC]: 
+-18581242:20161226:15133488:xadmin      : 2: Edit useubf       :Use UBF? [y]: 
+-18581242:20161226:15133488:xadmin      : 3: Edit ubfname      :UBF package name [ubftab]: 
+-18581242:20161226:15133488:xadmin      : 4: Edit genmake      :Gen makefile [y]: 
+-18581242:20161226:15133627:xadmin      :User entered: c
+-18581242:20161226:15133627:xadmin      :Terminating...
+23942:20161226:15151648:xadmin      :Generate go server
+-1755797103:20161226:15151649:xadmin      : 0: svname       :XATMI Server Name (binary) [testsv]: 
+23945:20161226:15151806:xadmin      :Generate go server
+-1228985967:20161226:15151806:xadmin      : 0: Edit svname       :XATMI Server Name (binary) [testsv]: 
+-1228985967:20161226:15151806:xadmin      : 1: Edit svcname      :Service name [TESTSVC]: 
+-1228985967:20161226:15151806:xadmin      : 2: Edit useubf       :Use UBF? [y]: 
+-1228985967:20161226:15151806:xadmin      : 3: Edit ubfname      :UBF package name [ubftab]: 
+-1228985967:20161226:15151806:xadmin      : 4: Edit genmake      :Gen makefile [y]: 
+-1228985967:20161226:15151806:xadmin      :Writting off [/home/mvitolin/projects/endurox/testsv.go] with [package main
+
+import (
+	atmi "github.com/endurox-dev/endurox-go"
+	"fmt"
+	"os"
+	"ubftab"
+)
+
+const (
+	SUCCEED = 0
+	FAIL    = -1
+)
+
+//TESTSVC service
+//@param ac ATMI Context
+//@param svc Service call information
+func TESTSVC(ac *atmi.ATMICtx, svc *atmi.TPSVCINFO) {
+
+	ret := SUCCEED
+	
+	//Return to the caller
+	defer func() {
+
+		ac.TpLogCloseReqFile()
+		if SUCCEED == ret {
+			ac.TpReturn(atmi.TPSUCCESS, 0, &svc.Data, 0)
+		} else {
+			ac.TpReturn(atmi.TPFAIL, 0, &svc.Data, 0)
+		}
+	}()
+	
+	
+	//Get UBF Handler
+	ub, _ := ac.CastToUBF(&svc.Data)
+
+	//Print the buffer to stdout
+	//fmt.Println("Incoming request:")
+	ub.TpLogPrintUBF(atmi.LOG_DEBUG, "Incoming request:")
+
+	//Resize buffer, to have some more space
+	if err := ub.TpRealloc(1024); err != nil {
+		ac.TpLogError("TpRealloc() Got error: %d:[%s]\n", err.Code(), err.Message())
+		ret = FAIL
+		goto out
+	}
+	
+	
+	//TODO: Run your processing here, and keep the succeed or fail status in 
+	//in "ret" flag.
+
+	return
+}
+
+//Server init, called when process is booted
+//@param ac ATMI Context
+func Init(ac *atmi.ATMICtx) int {
+
+	ac.TpLogWarn("Doing server init...");
+	//Advertize TESTSVC
+	if err := ac.TpAdvertise("TESTSVC", "TESTSVC", TESTSVC); err != nil {
+		fmt.Println(err)
+		return atmi.FAIL
+	}
+
+	return atmi.SUCCEED
+}
+
+//Server shutdown
+//@param ac ATMI Context
+func Uninit(ac *atmi.ATMICtx) {
+	ac.TpLogWarn("Server is shutting down...");
+}
+
+//Executable main entry point
+func main() {
+	//Have some context
+	ac, err := atmi.NewATMICtx()
+
+	if nil != err {
+		fmt.Errorf("Failed to allocate context!", err)
+		os.Exit(atmi.FAIL)
+	} else {
+		//Run as server
+		ac.TpRun(Init, Uninit)
+	}
+}
+]
+-1228985967:20161226:15151806:xadmin      :Writting off [/home/mvitolin/projects/endurox/Makefile] with [
+SOURCEDIR=.
+SOURCES := $(shell find $(SOURCEDIR) -name '*.go')
+
+BINARY=testsv
+LDFLAGS=
+
+VERSION=1.0.0
+BUILD_TIME=`date +%FT%T%z`
+
+.DEFAULT_GOAL: $(BINARY)
+
+$(BINARY): $(SOURCES)
+	go build ${LDFLAGS} -o ${BINARY} *.go
+
+.PHONY: install
+install:
+	go install ${LDFLAGS} ./...
+
+.PHONY: clean
+clean:
+	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
+]

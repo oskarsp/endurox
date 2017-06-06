@@ -1,0 +1,22 @@
+#!/usr/bin/pscript
+
+
+function hello(param1) {
+        param1[0]="HELLO WORLD\n";
+
+}
+
+local test = ["HELLO\n"];
+
+
+hello(test);
+
+
+print(test[0]);
+
+try{
+mkdir("/tmp/ccc");
+} catch(x)
+{
+print(x);
+}

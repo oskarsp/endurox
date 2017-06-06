@@ -1,0 +1,19 @@
+== Poney Races
+
+Poney races can be read, created, updated and deleted by a user having the 
+RACE_ORGANIZER role. A poneydrome ID is used to identify where to read 
+or save the poney race.
+
+=== Read
+
+[cols="h,5a"]
+|===
+| URL
+| /api/admin/[poneydromeId]/races/[raceId]
+
+| Method
+| GET
+
+| Response Body
+| include::{snippetDir}/race.json.adoc[]
+|===

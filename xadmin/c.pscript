@@ -1,0 +1,20 @@
+#!/usr/bin/pscript
+
+
+class BaseClass {
+        constructor()
+        {
+                ::print("Base constructor"+this.getclass()+"\n");
+        }
+}
+
+class ChildClass extends BaseClass {
+        constructor()
+        {
+                base.constructor();
+                ::print("Child constructor"+this.getclass()+"\n");
+        }
+}
+
+local test = ChildClass();
+

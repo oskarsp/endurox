@@ -1,0 +1,9 @@
+24490:20161122:12301981:xadmin      :[0x19f0010] <= malloc(size=16336):ndrx_nstd_tls_new /home/mvitolin/projects/endurox/libnstd/nstd_tls.c:177
+24490:20161122:12301981:xadmin      :[0x19f4130] <= calloc(nmemb=1, size=16):_ndrx_inicfg_new /home/mvitolin/projects/endurox/libnstd/inicfg.c:102
+24490:20161122:12301981:xadmin      :[0x19f4130] => free(ptr=0x19f4130):_ndrx_inicfg_free /home/mvitolin/projects/endurox/libnstd/inicfg.c:1113
+25668:20161122:12305096:xadmin      :[0x765010] <= malloc(size=16336):ndrx_nstd_tls_new /home/mvitolin/projects/endurox/libnstd/nstd_tls.c:177
+25668:20161122:12305096:xadmin      :[0x769130] <= calloc(nmemb=1, size=16):_ndrx_inicfg_new /home/mvitolin/projects/endurox/libnstd/inicfg.c:102
+25668:20161122:12305096:xadmin      :[0x769130] => free(ptr=0x769130):_ndrx_inicfg_free /home/mvitolin/projects/endurox/libnstd/inicfg.c:1113
+26869:20161122:12315247:xadmin      :[0x10b6010] <= malloc(size=16336):ndrx_nstd_tls_new /home/mvitolin/projects/endurox/libnstd/nstd_tls.c:177
+26869:20161122:12315247:xadmin      :[0x10ba130] <= calloc(nmemb=1, size=16):_ndrx_inicfg_new /home/mvitolin/projects/endurox/libnstd/inicfg.c:102
+26869:20161122:12315247:xadmin      :[0x10ba130] => free(ptr=0x10ba130):_ndrx_inicfg_free /home/mvitolin/projects/endurox/libnstd/inicfg.c:1113

@@ -1,0 +1,34 @@
+24981:20161223:22355808:xadmin      :Provision script started
+-26871407:20161223:22355808:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+26038:20161223:22374158:xadmin      :Provision script started
+-1701156463:20161223:22374158:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+26777:20161223:22381415:xadmin      :Provision script started
+912034193:20161223:22381415:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+12866:20161223:23323099:xadmin      :Provision script started
+-1935427183:20161223:23323099:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+12891:20161223:23323465:xadmin      :Provision script started
+956406161:20161223:23323465:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+12984:20161223:23325098:xadmin      :Provision script started
+1470388625:20161223:23325098:xadmin      : 0: qpath        :Queue device path [/dev/mqueue]: 
+14733:20161223:23350561:xadmin      :Got config defaults for provision: [-vqpath=/tmp]
+1190217648:20161223:23350561:xadmin      :Provision script started
+1211787665:20161223:23350561:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+15394:20161223:23352386:xadmin      :Got config defaults for provision: [-vqpath=/tmp]
+2111096752:20161223:23352387:xadmin      :Provision script started
+2132666769:20161223:23352387:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+16055:20161223:23354118:xadmin      :Got config defaults for provision: [-vqpath=/tmp]
+1858373552:20161223:23354119:xadmin      :Provision script started
+1879943569:20161223:23354119:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+16698:20161223:23355533:xadmin      :Got config defaults for provision: [-vqpath=/tmp]
+1922181040:20161223:23355533:xadmin      :Provision script started
+1943751057:20161223:23355533:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+16811:20161223:23362116:xadmin      :Got config defaults for provision: [-vqpath=/tmp]
+-989059152:20161223:23362117:xadmin      :Provision script started
+-967489135:20161223:23362117:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+19114:20161223:23380610:xadmin      :Got config defaults for provision: [-v qpath=/tmp -vnodeid=2]
+1535203248:20161223:23380610:xadmin      :Provision script started
+1556773265:20161223:23380610:xadmin      : 0: qpath        :Queue device path [/tmp]: 
+1535117574:20161223:23380640:xadmin      : 1: nodeid       :Cluster node id [2]: 
+1535117574:20161223:23380652:xadmin      : 2: qprefix      :System code (prefix/setfile name, etc) [test1]: 
+1535117574:20161223:23380666:xadmin      : 3: timeout      :System wide tpcall() timeout, seconds [90]: 
+1535117574:20161223:23380681:xadmin      : 4: appHome      :Application home [/home/mvitolin/projects/endurox]: 
