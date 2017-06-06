@@ -554,6 +554,24 @@ struct atmi_svc_list
     atmi_svc_list_t *next;
 };
 
+/**
+ * Enduro/X Queue details
+ * parsed all attributes of the queue in single struct
+ * Used only those attribs which match the q type.
+ * Currently holds only those fields which are needed for certain system
+ * functions, for example client reply Q details for tpbroadcast..
+ */
+struct ndrx_qdet
+{
+    int qtype; /* queue type, see  NDRX_QTYPE_* */
+    char qprefix[NDRX_MAX_Q_SIZE+1]; 
+    char binary_name[MAXTIDENT+2];
+    pid_t pid;
+    long contextid;
+};
+
+typedef struct ndrx_qdet ndrx_qdet_t;
+
 /* This may have some issues with alignment and this make
  * actual size smaller than 1 char */
 #define MAX_CALL_DATA_SIZE (ATMI_MSG_MAX_SIZE-sizeof(tp_command_call_t))
@@ -590,7 +608,7 @@ extern NDRX_API int ndrx_myid_parse_clt(char *my_id, TPMYID *out, int iscnv_init
 extern NDRX_API int ndrx_myid_parse_srv(char *my_id, TPMYID *out, int iscnv_initator);
 extern NDRX_API int ndrx_myid_is_alive(TPMYID *p_myid);
 extern NDRX_API void ndrx_myid_dump(int lev, TPMYID *p_myid, char *msg);
-extern NDRX_API int ndrx_myid_translate_to_q(TPMYID *p_myid, char *rply_q, int rply_q_buflen);
+extern NDRX_API int ndrx_myid_convert_to_q(TPMYID *p_myid, char *rply_q, int rply_q_buflen);
 extern NDRX_API int ndrx_atmiutil_init(void);
 
 /* Base64 encode/decode with file system valid output */

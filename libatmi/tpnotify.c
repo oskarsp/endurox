@@ -131,7 +131,7 @@ public int _tpnotify(CLIENTID *clientid, TPMYID *p_clientid_myid,
     {
         /* we are sending to client directly thus setup the q properly... */
         
-        if (SUCCEED!=ndrx_myid_translate_to_q(p_clientid_myid, send_q, 
+        if (SUCCEED!=ndrx_myid_convert_to_q(p_clientid_myid, send_q, 
                 sizeof(send_q)))
         {
             _TPset_error_fmt(TPEINVAL, "Failed to translate client data [%s] to Q", 
@@ -450,8 +450,8 @@ public int _tpbroadcast_local(char *nodeid, char *usrname, char *cltname,
             /* This is our client, lets broadcast to it... 
              * Build client id..
              */
+            NDRX_LOG(log_debug, "Got client Q: [%s] - extract CLIENTID", elt->qname);
         }
-        
     }
     
 out:
