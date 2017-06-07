@@ -66,22 +66,27 @@ void sign_chld_handler(int sig)
     pid_t chldpid;
     int stat_loc;
     struct rusage rusage;
+    /*
     NDRX_LOG(log_warn, "Got sigchld...");
+    */
 
     memset(&rusage, 0, sizeof(rusage));
 
     if (0!=(chldpid = wait3(&stat_loc, WNOHANG|WUNTRACED, &rusage)))
     {
+        /*
         NDRX_LOG(log_warn, "sigchld: PID: %d exit status: %d",
                                            chldpid, stat_loc);
-
+        */
         /* TODO: If this is last pid, then set state in idle? */
         G_config.ndrxd_stat=NDRXD_STAT_NOT_STARTED;
 
     }
     else
     {
+        /*
         NDRX_LOG(log_error, "Got sigchild for unknown");
+        */
     }
 }
 
