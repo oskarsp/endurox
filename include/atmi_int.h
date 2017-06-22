@@ -131,6 +131,11 @@ extern "C" {
 
 /* Helpers: */    
 #define XA_IS_DYNAMIC_REG       (G_atmi_env.xa_sw->flags & TMREGISTER)
+    
+    
+#define NDRX_XA_FLAG_RECON  "RECON"  /* Reconnect on tpbegin(), xa_start() if fails */
+#define NDRX_XA_FLAG_RECON_TEST  "RECON:"  /* Test the line */
+#define NDRX_XA_FLAGS_RECON_RETCODES_BUFSZ  32 /* List of error codes for retry */
 /*---------------------------Enums--------------------------------------*/
 /*---------------------------Typedefs-----------------------------------*/
 /**
@@ -275,8 +280,15 @@ struct atmi_lib_env
     char xa_close_str[PATH_MAX];/* XA Close string          */
     char xa_driverlib[PATH_MAX];/* Enduro RM Library/driver */
     char xa_rmlib[PATH_MAX];    /* RM library               */
-    int  xa_lazy_init;/* Should we                */
-    struct xa_switch_t * xa_sw; /* handler to XA switch */
+    int  xa_lazy_init;          /* Should we  init lately?  */
+    char xa_flags[PATH_MAX];    /* Specific flags for XA    */
+    struct xa_switch_t * xa_sw; /* handler to XA switch     */
+    
+    
+    char xa_recon_retcodes[NDRX_XA_FLAGS_RECON_RETCODES_BUFSZ];
+    int xa_recon_times;         /* Number of times to retry the recon    */
+    long xa_recon_usleep;       /* Microseconds to sleep between retries */
+    
     /* </XA Protocol configuration> */
     
     int     nrsems; /* number of sempahores for poll() mode of service mem */
