@@ -1,0 +1,48 @@
+TPEXPORT(3)
+==============
+:doctype: manpage
+
+
+NAME
+----
+tpexport - export ...
+
+
+SYNOPSIS
+--------
+#include <atmi.h>
+
+int tpexport(char *ibuf, long ilen, char *ostr, long *olen, long flags)
+
+For XATMI client link with '-latmiclt -latmi -lview -lnstd -lpthread -lrt -lm'
+
+For XATMI server link with '-latmisrv|-latmisrvnomain|-latmisrvinteg -latmi -lview -lnstd -lpthread -lrt -lm'
+
+DESCRIPTION
+-----------
+
+
+
+RETURN VALUE
+------------
+On success, *tpacall()* return call descriptor (>0); on error, -1 is returned, 
+with *tperrno* set to indicate the error.
+
+ERRORS
+------
+
+EXAMPLE
+-------
+
+BUGS
+----
+Report bugs to support@mavimax.com 
+
+SEE ALSO
+--------
+*tpimport(3)*
+
+COPYING
+-------
+(C) Mavimax, Ltd
+
