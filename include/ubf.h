@@ -294,6 +294,7 @@ extern NDRX_API int Bflddbdrop(EDB_txn *txn);
 extern NDRX_API int Bflddbdel(EDB_txn *txn, BFLDID bfldid);
 extern NDRX_API int Bflddbadd(EDB_txn *txn, short fldtype, BFLDID bfldno, 
         char *fldname);
+extern NDRX_API BFLDOCC Bnum(UBFH *p_ub);
 
 
 #if defined(__cplusplus)

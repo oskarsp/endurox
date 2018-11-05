@@ -1872,4 +1872,43 @@ expublic int ndrx_Blen (UBFH *p_ub, BFLDID bfldid, BFLDOCC occ)
 
     return ret;
 }
+
+expublic BFLDOCC ndrx_Bnum(UBFH *p_ub)
+{
+    int ret = EXSUCCEED;
+    BFLDOCC ret_occs = 0;
+    char fn[] = "_Bnum";
+    #ifdef UBF_API_DEBUG
+    dtype_ext1_t *__dbg_dtype_ext1;
+    #endif
+    /* Seems this caused tricks for multi threading.*/
+    static __thread Bnext_state_t state;
+    BFLDID bfldid;
+    BFLDOCC occ;
+
+    memset(&state, 0, sizeof(state));
+    bfldid= BFIRSTFLDID;
+
+    while (1==(ret=ndrx_Bnext(&state, p_ub, &bfldid, &occ, NULL, NULL, NULL)))
+    {
+        switch (ret)
+        {
+            /* Found filed in buffer */
+            case 1:
+                ret_occs++;
+                break;
+            /* FAIL */
+            case EXFAIL:
+                EXFAIL_OUT(ret_occs);
+                break;
+            /* End Of Buffer */
+            case 0:
+                goto out;
+                break;
+        }
+    }
+        
+out:
+    return ret_occs;
+}
 /* vim: set ts=4 sw=4 et smartindent: */
