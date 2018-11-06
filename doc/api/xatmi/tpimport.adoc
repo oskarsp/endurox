@@ -21,9 +21,14 @@ For XATMI server link with '-latmisrv|-latmisrvnomain|-latmisrvinteg -latmi -lvi
 DESCRIPTION
 -----------
 Function converts JSON formatted text in typed message buffer. 
-*buftype* - determine which type of buffer will be imported
-*version* - number of version to import
-*subtype* - used to import from data tag to VIEW buffer, contains name of VIEW buffer
+
+*Valid flags*
+
+
+*JSON tags in import file*
+*buftype* - determine which type of buffer will be imported (STRING, UBF, VIEW, CARRAY, JSON)
+*version* - JSON version to import
+*subtype* - contains name of VIEW buffer, used only for import to VIEW buffer
 *data* - contains JSON formated data 
 
 

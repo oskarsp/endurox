@@ -23,7 +23,7 @@ DESCRIPTION
 -----------
 Function converts JSON formatted text in 'buffer' to UBF buffer. JSON should
 be formatted in single level. Where JSON field name matches UBF field name.
-If multiple occurrances/array of values is present in JSON, 
+If multiple occurrences/array of values is present in JSON, 
 then it is converted as multiple field occurrences in UBF buffer.
 
 For example following JSON buffer:

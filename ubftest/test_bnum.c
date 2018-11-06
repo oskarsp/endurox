@@ -107,14 +107,6 @@ Ensure(test_bnum_simple)
 
     fldcount=Bnum(p_ub);
     assert_equal(fldcount, 21);
-    fldcount=0;
-    bfldid = BFIRSTFLDID;
-    while(1==Bnext(p_ub, &bfldid, &occ, NULL, NULL))
-    {
-        fldcount++;
-    }
-
-    assert_equal(fldcount, 21);
 }
 
 TestSuite *ubf_bnum_tests(void)
