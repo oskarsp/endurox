@@ -20,10 +20,22 @@ For XATMI server link with '-latmisrv|-latmisrvnomain|-latmisrvinteg -latmi -lvi
 
 DESCRIPTION
 -----------
-Function converts JSON formatted text in typed message buffer. 
+Function converts JSON formatted text buffer into typed message buffer. 
+
+*'istr' JSON formated buffer to import
+'ilen' 
+*'obuf' Output buffer should be allocated with *tpalloc()* call. If the allocated 
+buffer size is shorter then received one, then Enduro/X will automatically realloc 
+the buffer to new size. If 'olen' not NULL there will be stored received buffer length.
+'flags' 
 
 *Valid flags*
 
+*TPEX_STRING* 
+
+*TPEX_NOCHANGE* Do not allow to change the reply buffer type. If flag 
+is set and different buffer type is received than original, 
+then error *TPEINVAL* is returned.
 
 *JSON tags in import file*
 *buftype* - determine which type of buffer will be imported (STRING, UBF, VIEW, CARRAY, JSON)
@@ -171,6 +183,14 @@ with *tperrno* set to indicate the error.
 
 ERRORS
 ------
+Note that *tpstrerror()* returns generic error message plus custom message with 
+debug info from last function call.
+
+*TPEINVAL* Invalid parameter is given to function. Either 'istr' is NULL 
+or flags does not allow to change the value.
+
+TPEINVAL Invalid JSON or invalid base64 encoding, istr is NULL or obuf is NULL.
+
 
 EXAMPLE
 -------
