@@ -5,7 +5,7 @@ TPIMPORT(3)
 
 NAME
 ----
-tpimport - Import.a JSON formated text to UBF|VIEW|STRING|CARRAY|JSON type buffer 
+tpimport - Import.a JSON formated text buffer to UBF|VIEW|STRING|CARRAY|JSON type buffer 
 
 
 SYNOPSIS
@@ -23,10 +23,9 @@ DESCRIPTION
 Function converts JSON formatted text buffer into typed message buffer. 
 
 *'istr' JSON formated buffer to import
-'ilen' 
 *'obuf' Output buffer should be allocated with *tpalloc()* call. If the allocated 
 buffer size is shorter then received one, then Enduro/X will automatically realloc 
-the buffer to new size. If 'olen' not NULL there will be stored received buffer length.
+the buffer to new size. If 'olen' not NULL there will be stored imported buffer length.
 'flags' 
 
 *Valid flags*
