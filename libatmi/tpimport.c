@@ -3,31 +3,32 @@
 **
 ** @file tpimport.c
 ** 
-** -----------------------------------------------------------------------------
-** Enduro/X Middleware Platform for Distributed Transaction Processing
-** Copyright (C) 2015, Mavimax, Ltd. All Rights Reserved.
-** This software is released under one of the following licenses:
-** GPL or Mavimax's license for commercial use.
-** -----------------------------------------------------------------------------
-** GPL license:
-** 
-** This program is free software; you can redistribute it and/or modify it under
-** the terms of the GNU General Public License as published by the Free Software
-** Foundation; either version 2 of the License, or (at your option) any later
-** version.
-**
-** This program is distributed in the hope that it will be useful, but WITHOUT ANY
-** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-** PARTICULAR PURPOSE. See the GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License along with
-** this program; if not, write to the Free Software Foundation, Inc., 59 Temple
-** Place, Suite 330, Boston, MA 02111-1307 USA
-**
-** -----------------------------------------------------------------------------
-** A commercial use license is available from Mavimax, Ltd
-** contact@mavimax.com
-** -----------------------------------------------------------------------------
+/* -----------------------------------------------------------------------------
+ * Enduro/X Middleware Platform for Distributed Transaction Processing
+ * Copyright (C) 2009-2016, ATR Baltic, Ltd. All Rights Reserved.
+ * Copyright (C) 2017-2018, Mavimax, Ltd. All Rights Reserved.
+ * This software is released under one of the following licenses:
+ * AGPL or Mavimax's license for commercial use.
+ * -----------------------------------------------------------------------------
+ * AGPL license:
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License, version 3 as published
+ * by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Affero General Public License, version 3
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along 
+ * with this program; if not, write to the Free Software Foundation, Inc., 
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * -----------------------------------------------------------------------------
+ * A commercial use license is available from Mavimax, Ltd
+ * contact@mavimax.com
+ * -----------------------------------------------------------------------------
 */
 
 /*---------------------------Includes-----------------------------------*/
@@ -62,12 +63,13 @@
  * then it is not freed. If it was manual buffer, then tpfree is done on it.
  * BE AWARE!
  * @param bufctl
- * @param istr
- * @param ilen
- * @param obuf
- * @param olen
- * @param flags
- * @return 
+ * @param istr JSON representation of a message 
+ * @param ilen contains the length of the binary data contained in istr
+ * @param obuf typed message buffer
+ * @param olen amount of valid data contained in the output buffer
+ * @param flags TPEX_STRING - istr is in string format encoded in base64, 
+ * TPEX_NOCHANGE - Reject tpimport with error if types does not match
+ * @return EXSUCCEED / FAIL
  */
 expublic int ndrx_tpimportex(ndrx_expbufctl_t *bufctl,
         char *istr, long ilen, char **obuf, long *olen, long flags)
@@ -86,6 +88,7 @@ expublic int ndrx_tpimportex(ndrx_expbufctl_t *bufctl,
     long size_existing=EXFAIL;
     long new_size=EXFAIL;
     char *obuftemp=NULL;
+    char *istrtemp=istr;
 
     int type;
     char *str_val;
@@ -94,15 +97,24 @@ expublic int ndrx_tpimportex(ndrx_expbufctl_t *bufctl,
     EXJSON_Value *data_value=NULL;
     EXJSON_Object *data_object=NULL;
 
-    NDRX_LOG(log_debug, "%s: enter", __func__);
+    NDRX_LOG(log_debug, "enter",);
 
     /* TODO Check flag if base64 then decode from base64 */
-
-    NDRX_LOG(log_debug, "Parsing buffer: [%s]", istr);
-
-    if ( NULL == (root_value = exjson_parse_string_with_comments(istr)))
+    if (TPEX_STRING == flags)
     {
-        NDRX_LOG(log_error, "Failed to parse istr");
+        NDRX_LOG(log_debug, "Decode istr: [%s]", istr);
+        if (NULL==ndrx_base64_decode(istr, strlen(istr), (size_t*)&size_used, istrtemp))
+        {
+            NDRX_LOG(log_error, "Failed to decode istr from BASE64");
+            EXFAIL_OUT(ret);
+        }
+    }
+
+    NDRX_LOG(log_debug, "Parsing buffer: [%s]", istrtemp);
+
+    if ( NULL == (root_value = exjson_parse_string_with_comments(istrtemp)))
+    {
+        NDRX_LOG(log_error, "Failed to parse istrtemp");
         EXFAIL_OUT(ret);
     }
     type = exjson_value_get_type(root_value);

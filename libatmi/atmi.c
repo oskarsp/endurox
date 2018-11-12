@@ -1557,8 +1557,9 @@ out:
  * @param ilen contains the length of the binary data contained in istr
  * @param obuf typed message buffer
  * @param olen amount of valid data contained in the output buffer
- * @param flags 
- * @return 
+ * @param flags TPEX_STRING - istr is in string format encoded in base64, 
+ * TPEX_NOCHANGE - Reject tpimport with error if types does not match
+ * @return 0 on succeed, -1 on fail
  */
 expublic int tpimport(char *istr, long ilen, char **obuf, long *olen, long flags)
 {
@@ -1598,8 +1599,9 @@ out:
  * @param ilen contains the length of the binary data contained in istr
  * @param obuf typed message buffer
  * @param olen amount of valid data contained in the output buffer
- * @param flags
- * @return 
+ * @param flags TPEX_STRING - istr is in string format encoded in base64, 
+ * TPEX_NOCHANGE - Reject tpimport with error if types does not match
+ * @return EXSUCCEED / FAIL
  */
 expublic int tpimportex(ndrx_expbufctl_t *bufctl, char *istr, long ilen, char **obuf, long *olen, long flags)
 {
