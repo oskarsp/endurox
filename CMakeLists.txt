@@ -385,6 +385,7 @@ add_subdirectory (cconfsrv) # Common-Config server
 add_subdirectory (plugins) # XA Drivers for RMs
 add_subdirectory (enctools) # XA Drivers for RMs
 add_subdirectory (atmitest) #  ATMI testing
+add_subdirectory (buildserver) #  buildserver and buildclient compiler
 
 IF(DEFINE_DISABLEDOC)
         message("Documentation disabled - not building")

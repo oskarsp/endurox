@@ -104,6 +104,12 @@
 
 #define NDRX_LD_LIBRARY_PATH "@NDRX_LD_LIBRARY_PATH@"
 
+/* Additional lib for OS */
+#define NDRX_LIB_RT	@RT_LIB@
+
+/* Where libaries are installed? */
+#define NDRX_LIB_SUFFIX	@LIB_SUFFIX@
+
 /* PThread mode for Solaris */
 #ifndef _POSIX_PTHREAD_SEMANTICS
 #define _POSIX_PTHREAD_SEMANTICS

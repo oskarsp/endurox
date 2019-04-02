@@ -49,7 +49,8 @@ extern "C" {
 #define HDR_C_LANG              0         /* Default goes to C                */
 #define HDR_GO_LANG             1         /* Golang                           */
 #define HDR_JAVA_LANG           2         /* Java language moder              */
-#define HDR_MAX_LANG            2
+#define HDR_COBOL_LANG          3         /* COBOL language mode              */
+#define HDR_MAX_LANG            3
 
 /* first field used bytes: */
 #if EX_ALIGNMENT_BYTES == 8
