@@ -37,21 +37,29 @@
 /*------------------------------Externs---------------------------------------*/
 extern char ndrx_G_build_cmd[];
 /*------------------------------Macros----------------------------------------*/
+#define COMPILE_SRV     1
+#define COMPILE_CLT     2
+#define COMPILE_TMS     3
 /*------------------------------Enums-----------------------------------------*/
 /*------------------------------Typedefs--------------------------------------*/
 /**
  * List of Function and Service names
  */
-typedef struct bs_string_list bs_string_list_t;
-struct bs_string_list
+typedef struct bscache_hash bscache_hash_t;
+struct bscache_hash
 {
-    char srvcnm[XATMI_SERVICE_NAME_LENGTH+1];
+    char svcnm[XATMI_SERVICE_NAME_LENGTH+1];
     char funcnm[128+1];
-    bs_string_list_t *next;
+    EX_hash_handle hh; /* makes this structure hashable        */
 };
+
 /*------------------------------Globals---------------------------------------*/
 /*------------------------------Statics---------------------------------------*/
 /*------------------------------Prototypes------------------------------------*/
-extern int ndrx_buildserver_generate_code(char *cfile, int thread_option, bs_string_list_t *bs_list);
+extern int ndrx_buildserver_generate_code(char *cfile, int thread_option, 
+                                          bscache_hash_t *p_bscache, 
+                                          char *p_xaswitch);
+
+extern int ndrx_compile_c(char *cfile, int compile_type);
 #endif /* BUILDSERVER_H_ */
 /* vim: set ts=4 sw=4 et smartindent: */

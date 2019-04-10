@@ -60,8 +60,60 @@
 /*---------------------------Enums--------------------------------------*/
 /*---------------------------Typedefs-----------------------------------*/
 /*---------------------------Globals------------------------------------*/
-expublic char ndrx_G_build_cmd[PATH_MAX+1] = "cc";
 /*---------------------------Statics------------------------------------*/
+exprivate bscache_hash_t *M_bscache = NULL; /* buildserver cache . */
+
+
+/**
+ * Check service name in cache. If found then skip
+ * @param svcnm - Service name to check
+ * @return EXSUCCEED(found & skip)/EXFAIL
+ */
+exprivate int chk_cached_svcnm(char *svcnm)
+{
+    bscache_hash_t * ret = NULL;
+
+    EXHASH_FIND_STR( M_bscache, svcnm, ret);
+    
+    if (NULL==ret)
+    {
+        NDRX_LOG(log_debug, "Service name [%s] not in cache", svcnm);
+        goto out;
+    }
+
+out:
+    if (NULL==ret)
+        return EXFAIL;
+    else
+        return EXSUCCEED;
+}
+
+/**
+ * Add add SVCNM/FUNCNM to cache
+ * @param svcnm - Service name add to cache
+ * @param funcnm - Function name add to cache
+ * @return EXSUCCEED/EXFAIL
+ */
+exprivate int add_cached_svcnm(char *svcnm, char *funcnm)
+{
+    bscache_hash_t * ret = NDRX_CALLOC(1, sizeof(bscache_hash_t));
+    
+    if (NULL==ret)
+    {
+        NDRX_LOG(log_error, "Failed to alloc bscache_hash_t: %s", strerror(errno));
+        userlog("Failed to alloc bscache_hash_t: %s", strerror(errno));
+    }
+    
+    NDRX_STRCPY_SAFE(ret->svcnm, svcnm);
+    NDRX_STRCPY_SAFE(ret->funcnm, funcnm);
+    
+    EXHASH_ADD_STR( M_bscache, svcnm, ret );
+    
+    if (NULL!=ret)
+        return EXSUCCEED;
+    else
+        return EXFAIL;
+}
 
 /**
  * Function to parse Service/Function from string 
@@ -69,13 +121,13 @@ expublic char ndrx_G_build_cmd[PATH_MAX+1] = "cc";
  * @param advtbl advertising table to return
  * @return 
  */
-exprivate int parse_s_string(char *p_string, bs_string_list_t *bs_list)
+exprivate int parse_s_string(char *p_string)
 {
     int ret = EXSUCCEED;
-    char srvcnm[128+1]={EXEOS};
+    char svcnm[128+1]={EXEOS};
     char funcnm[15+1]={EXEOS};
-    char *f, *p, *str=NULL;
-    bs_string_list_t tmp;
+    char *f=NULL, *p=NULL, *str=NULL;
+    bscache_hash_t *tmp=NULL;
 
     f=strchr(p_string, ':');
     if (NULL != f)
@@ -83,22 +135,56 @@ exprivate int parse_s_string(char *p_string, bs_string_list_t *bs_list)
         NDRX_STRCPY_SAFE(funcnm, f+1);
     }
 
-    for (p = strtok_r(p_string, ",:", &str); 
-         p != NULL && (0!=strcmp(f+1,p) ); 
-         p = strtok_r(NULL, ",:", &str))
+    p = strtok_r(p_string, ",:", &str);
+
+    /* In case when not provided SVCNM */
+    if (NULL != f && 0==strcmp(f+1,p))
     {
+        NDRX_STRCPY_SAFE(svcnm, funcnm);
+        NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
+        if (EXSUCCEED == chk_cached_svcnm(svcnm))
+        {
+            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
+            goto out;
+        }
+        if (EXSUCCEED!=add_cached_svcnm(svcnm, funcnm))
+        {
+            EXFAIL_OUT(ret);
+        }
+    }
+
+    while (p != NULL )
+    {
+        if ( NULL != f && 0==strcmp(f+1,p) )
+        {
+            break;
+        }
+
+        /* Function name is provided */
         if (NULL != f)
         {
-            NDRX_STRCPY_SAFE(tmp.funcnm, f+1);
+            NDRX_STRCPY_SAFE(funcnm, f+1);
         }
+        /* Function name not provided, set as Service name*/
         else 
         {
-            NDRX_STRCPY_SAFE(tmp.funcnm, p);
+            NDRX_STRCPY_SAFE(funcnm, p);
         }
-        NDRX_STRCPY_SAFE(tmp.srvcnm, p);
 
-        LL_APPEND(bs_list, tmp);
-        NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", advtbl.svcnm, advtbl.funcnm);
+        NDRX_STRCPY_SAFE(svcnm, p);
+
+        NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
+        if (EXSUCCEED == chk_cached_svcnm(svcnm))
+        {
+            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
+            goto out;
+        }
+        if (EXSUCCEED!=add_cached_svcnm(svcnm, funcnm))
+        {
+            EXFAIL_OUT(ret);
+        }
+
+        p = strtok_r(NULL, ",:", &str);
     }
 
     out:
@@ -111,7 +197,7 @@ exprivate int parse_s_string(char *p_string, bs_string_list_t *bs_list)
  * @param advtbl advertising table to return
  * @return EXSUCCEED/EXFAIL
  */
-exprivate int parse_s_file(char *infile, bs_string_list_t *bs_list)
+exprivate int parse_s_file(char *infile)
 {
     int ret = EXSUCCEED;
     FILE * fp;
@@ -133,7 +219,7 @@ NDRX_LOG(log_error, "Parse string [%s] len=[%d]", string, (int)len);
         {
             NDRX_LOG(log_error, "Skip comment [%s]", string);
         }
-        else if ( EXSUCCEED!= parse_s_string(string, list) )
+        else if ( EXSUCCEED!= parse_s_string(string) )
         {
             EXFAIL_OUT(ret);
         }
@@ -172,8 +258,8 @@ int main(int argc, char **argv)
     char tmp[PATH_MAX];
     int thread_option=EXFALSE;
     int keep_buildserver_main=EXFALSE;
-    bs_string_list_t *bs_list=NULL;
     char build_cmd[PATH_MAX+1];
+    char *xaswitch=NULL;
     
     NDRX_BANNER;
     
@@ -188,9 +274,10 @@ int main(int argc, char **argv)
                 break;
             case 's':
                 s_value= optarg;
+                NDRX_LOG(log_debug, "s_value: [%s]", s_value);
                 if ( '@'==s_value[0] )
                 {
-                    if (EXSUCCEED != parse_s_file(s_value, bs_list) )
+                    if (EXSUCCEED != parse_s_file(s_value) )
                     {
                         NDRX_LOG(log_warn, 
                              "Failed to read Service/Function from [%s]", 
@@ -200,7 +287,7 @@ int main(int argc, char **argv)
                 }
                 else 
                 {
-                    if ( EXSUCCEED != parse_s_string(s_value, bs_list) )
+                    if ( EXSUCCEED != parse_s_string(s_value) )
                     {
                         NDRX_LOG(log_warn, 
                              "Failed to {parse Service(s)/Function from value ", 
@@ -252,51 +339,22 @@ int main(int argc, char **argv)
             EXFAIL_OUT(ret);
         }
         
-        if (EXSUCCEED!=ndrx_buildserver_generate_code(cfile, thread_option, bs_list))
+        if (EXSUCCEED!=ndrx_buildserver_generate_code(cfile, thread_option, 
+                                                      M_bscache, xaswitch))
         {
             NDRX_LOG(log_error, "Failed to generate code!");
             EXFAIL_OUT(ret);
         }
     }
-    env_cc = getenv("CC");
-    if (NULL!=env_cc && env_cc[0]!=0)
-    {
-        snprintf(ndrx_G_build_cmd, sizeof(ndrx_G_build_cmd), "%s", env_cc);
-    }
-    env_cflags = getenv("CFLAGS");
-    env_ndrx_home = getenv("NDRX_HOME");
-
-    if (NULL!=env_ndrx_home && env_ndrx_home[0]!=0)
-    {
-        snprintf(ndrx_lib, sizeof(ndrx_lib), "-I%s/include", env_ndrx_home);
-        snprintf(ndrx_inc, sizeof(ndrx_inc), "-L%s/lib", env_ndrx_home);
-    }
-        
-    NDRX_LOG(log_debug, "Build command set to: [%s]", ndrx_G_build_cmd);
-
-    snprintf(build_cmd, sizeof(build_cmd), 
-             "%s "      /* C language compilation command */
-             "%s "      /* CFLAGS */
-             "-o %s "   /* outfile */
-             "%s "      /* generated C file with main() */
-             "%s "      /* ndrx_home/include */
-             "%s "      /* ndrx_home/lib */
-             "%s "      /* First files */
-             "%s "      /* EnduroX specific libraries */
-             "%s ",     /* Last Files */
-             ndrx_G_build_cmd,
-             (NULL==env_cflags?"":env_cflags),
-             ofile,
-             NULL!=cfile,
-             ndrx_inc,
-             ndrx_lib, 
-             f_value,
-             "-l$atmisrv -latmi -lubf -lnstd $dyn_libs -lm -lc -lpthread ", /* TODO */
-             l_value
-        );
     
-    NDRX_LOG(log_debug, "build_cmd: [%s]", build_cmd);
-    
+    if (HDR_C_LANG==lang_mode)
+    {
+        if (EXSUCCEED!=ndrx_compile_c(cfile, COMPILE_SRV))
+        {
+            EXFAIL_OUT(ret);
+        }
+    }
+
 out:
 
     if (EXFALSE == keep_buildserver_main)

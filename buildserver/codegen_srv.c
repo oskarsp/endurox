@@ -48,7 +48,6 @@
 #include <ndebug.h>
 #include <errno.h>
 #include "buildserver.h"
-#include <typed_view.h>
 /*---------------------------Externs------------------------------------*/
 /*---------------------------Macros-------------------------------------*/
 /*---------------------------Enums--------------------------------------*/
@@ -67,10 +66,12 @@
  * @return EXSUCCEED/EXFAIL
  */
 expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option, 
-                                            bs_string_list_t *bs_list, char *p_xaswitch)
+                                            bscache_hash_t *p_bscache, 
+                                            char *p_xaswitch)
 {
     int ret = EXSUCCEED;
     FILE *f = NULL;
+    bscache_hash_t *bs, *bst;
 
     NDRX_LOG(log_info, "C-Code to compile: [%s]", cfile);
 
@@ -102,7 +103,13 @@ expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option,
         fprintf(f, "extern struct xa_switch_t %s;\n", p_xaswitch);
     }
     
-    fprintf(f, "extern void %s ((TPSVCINFO *));", "TESTSERVICE\n");
+    if (NULL != p_bscache)
+    {
+        EXHASH_ITER(hh, p_bscache, bs, bst)
+        {
+            fprintf(f, "extern void %s ((TPSVCINFO *));\n", bs->funcnm);
+        }
+    }
     
     fprintf(f, "/*---------------------------Macros-------------------------------------*/\n");
     fprintf(f, "/*---------------------------Enums--------------------------------------*/\n");
@@ -111,13 +118,14 @@ expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option,
     fprintf(f, "/*---------------------------Statics------------------------------------*/\n");
     fprintf(f, "/* Auto generated system advertise table */\n");
     fprintf(f, "static struct tmdsptchtbl_t tmdsptchtbl[] = {\n");
-    /* TODO */
-//    while ()
-//    {
-/*    fprintf(f, "    {\"%s\",\"%s\",(void (*)(TPSVCINFO *)) %s, 0, 0 },\n", 
-            advtbl->svcnm, advtbl->funcnm, advtbl->funcnm);*/
-    fprintf(f, "    {\"%s\",\"%s\",(void (*)(TPSVCINFO *)) %s, 0, 0 },\n", 
-            "AAA", "BBB", "BBB");
+    if (NULL != p_bscache)
+    {
+        EXHASH_ITER(hh, p_bscache, bs, bst)
+        {
+            fprintf(f, "    {\"%s\",\"%s\",(void (*)(TPSVCINFO *)) %s, 0, 0 },\n", 
+                                    bs->svcnm, bs->funcnm, bs->funcnm);
+        }
+    }
 //    }
     fprintf(f, "    { NULL, NULL, NULL, 0, 0 }\n");
     fprintf(f, "};\n");
@@ -130,10 +138,10 @@ expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option,
     fprintf(f, "    _tmbuilt_with_thread_option=%d;\n",thread_option);
     fprintf(f, "    struct tmsvrargs_t tmsvrargs =\n");
     fprintf(f, "    {\n");
-    fprintf(f, "        %s,\n");
+    fprintf(f, "        %s,\n", (NULL!=p_xaswitch?p_xaswitch:"NULL"));
     fprintf(f, "        &tmdsptchtbl[0],\n");
     fprintf(f, "        0,\n");
-    fprintf(f, "'        tpsvrinit,\n");
+    fprintf(f, "        tpsvrinit,\n");
     fprintf(f, "        tpsvrdone,\n");
     fprintf(f, "        NULL,\n");
     fprintf(f, "        NULL,\n");
@@ -142,7 +150,7 @@ expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option,
     fprintf(f, "        NULL\n");
     fprintf(f, "    };\n");
     fprintf(f, "    return( _tmstartserver( argc, argv, &tmsvrargs ));\n");
-    fprintf(f, "}\n", (NULL!=p_xaswitch?p_xaswitch:"NULL");
+    fprintf(f, "}\n");
 
     NDRX_FCLOSE(f);
     f = NULL;
