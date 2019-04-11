@@ -61,23 +61,24 @@
 /*---------------------------Typedefs-----------------------------------*/
 /*---------------------------Globals------------------------------------*/
 /*---------------------------Statics------------------------------------*/
-exprivate bscache_hash_t *M_bscache = NULL; /* buildserver cache . */
+exprivate bs_svcnm_lst_t *M_bs_svcnm_lst = NULL; /* buildserver cache . */
+exprivate bs_svcnm_lst_t *M_bs_funcnm_lst = NULL; /* buildserver cache . */
 
 
 /**
- * Check service name in cache. If found then skip
+ * Check service name in list. If found then skip
  * @param svcnm - Service name to check
  * @return EXSUCCEED(found & skip)/EXFAIL
  */
-exprivate int chk_cached_svcnm(char *svcnm)
+exprivate int chk_listed_svcnm(char *svcnm)
 {
-    bscache_hash_t * ret = NULL;
+    bs_svcnm_lst_t * ret = NULL;
 
-    EXHASH_FIND_STR( M_bscache, svcnm, ret);
+    EXHASH_FIND_STR( M_bs_svcnm_lst, svcnm, ret);
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_debug, "Service name [%s] not in cache", svcnm);
+        NDRX_LOG(log_debug, "Service name [%s] not in list", svcnm);
         goto out;
     }
 
@@ -89,25 +90,75 @@ out:
 }
 
 /**
- * Add add SVCNM/FUNCNM to cache
- * @param svcnm - Service name add to cache
- * @param funcnm - Function name add to cache
- * @return EXSUCCEED/EXFAIL
+ * Check funtion name in list. If found then skip
+ * @param svcnm - Service name to check
+ * @return EXSUCCEED(found & skip)/EXFAIL
  */
-exprivate int add_cached_svcnm(char *svcnm, char *funcnm)
+exprivate int chk_listed_funcnm(char *funcnm)
 {
-    bscache_hash_t * ret = NDRX_CALLOC(1, sizeof(bscache_hash_t));
+    bs_svcnm_lst_t * ret = NULL;
+
+    EXHASH_FIND_STR( M_bs_funcnm_lst, funcnm, ret);
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_error, "Failed to alloc bscache_hash_t: %s", strerror(errno));
-        userlog("Failed to alloc bscache_hash_t: %s", strerror(errno));
+        NDRX_LOG(log_debug, "Function name [%s] not in list", funcnm);
+        goto out;
+    }
+
+out:
+    if (NULL==ret)
+        return EXFAIL;
+    else
+        return EXSUCCEED;
+}
+
+/**
+ * Add add SVCNM/FUNCNM to list
+ * @param svcnm - Service name add to list
+ * @param funcnm - Function name add to list
+ * @return EXSUCCEED/EXFAIL
+ */
+exprivate int add_listed_svcnm(char *svcnm, char *funcnm)
+{
+    bs_svcnm_lst_t * ret = NDRX_CALLOC(1, sizeof(bs_svcnm_lst_t));
+    
+    if (NULL==ret)
+    {
+        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
     }
     
     NDRX_STRCPY_SAFE(ret->svcnm, svcnm);
     NDRX_STRCPY_SAFE(ret->funcnm, funcnm);
     
-    EXHASH_ADD_STR( M_bscache, svcnm, ret );
+    EXHASH_ADD_STR( M_bs_svcnm_lst, svcnm, ret );
+    
+    if (NULL!=ret)
+        return EXSUCCEED;
+    else
+        return EXFAIL;
+}
+
+/**
+ * Add add FUNCNM to list
+ * @param svcnm - Service name add to cache
+ * @param funcnm - Function name add to cache
+ * @return EXSUCCEED/EXFAIL
+ */
+exprivate int add_listed_funcnm(char *funcnm)
+{
+    bs_svcnm_lst_t * ret = NDRX_CALLOC(1, sizeof(bs_svcnm_lst_t));
+    
+    if (NULL==ret)
+    {
+        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+    }
+    
+    NDRX_STRCPY_SAFE(ret->funcnm, funcnm);
+    
+    EXHASH_ADD_STR( M_bs_funcnm_lst, funcnm, ret );
     
     if (NULL!=ret)
         return EXSUCCEED;
@@ -127,7 +178,7 @@ exprivate int parse_s_string(char *p_string)
     char svcnm[128+1]={EXEOS};
     char funcnm[15+1]={EXEOS};
     char *f=NULL, *p=NULL, *str=NULL;
-    bscache_hash_t *tmp=NULL;
+    bs_svcnm_lst_t *tmp=NULL;
 
     f=strchr(p_string, ':');
     if (NULL != f)
@@ -142,14 +193,21 @@ exprivate int parse_s_string(char *p_string)
     {
         NDRX_STRCPY_SAFE(svcnm, funcnm);
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
-        if (EXSUCCEED == chk_cached_svcnm(svcnm))
+        if (EXSUCCEED == chk_listed_svcnm(svcnm))
         {
             NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
             goto out;
         }
-        if (EXSUCCEED!=add_cached_svcnm(svcnm, funcnm))
+        if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
         {
             EXFAIL_OUT(ret);
+        }
+        if (EXSUCCEED != chk_listed_funcnm(funcnm))
+        {
+            if (EXSUCCEED!=add_listed_funcnm(funcnm))
+            {
+                EXFAIL_OUT(ret);
+            }
         }
     }
 
@@ -174,14 +232,21 @@ exprivate int parse_s_string(char *p_string)
         NDRX_STRCPY_SAFE(svcnm, p);
 
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
-        if (EXSUCCEED == chk_cached_svcnm(svcnm))
+        if (EXSUCCEED == chk_listed_svcnm(svcnm))
         {
             NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
             goto out;
         }
-        if (EXSUCCEED!=add_cached_svcnm(svcnm, funcnm))
+        if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
         {
             EXFAIL_OUT(ret);
+        }
+        if (EXSUCCEED != chk_listed_funcnm(funcnm))
+        {
+            if (EXSUCCEED!=add_listed_funcnm(funcnm))
+            {
+                EXFAIL_OUT(ret);
+            }
         }
 
         p = strtok_r(NULL, ",:", &str);
@@ -340,7 +405,8 @@ int main(int argc, char **argv)
         }
         
         if (EXSUCCEED!=ndrx_buildserver_generate_code(cfile, thread_option, 
-                                                      M_bscache, xaswitch))
+                                                      M_bs_svcnm_lst, M_bs_funcnm_lst,
+                                                      xaswitch))
         {
             NDRX_LOG(log_error, "Failed to generate code!");
             EXFAIL_OUT(ret);

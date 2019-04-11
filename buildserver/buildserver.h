@@ -43,13 +43,14 @@ extern char ndrx_G_build_cmd[];
 /*------------------------------Enums-----------------------------------------*/
 /*------------------------------Typedefs--------------------------------------*/
 /**
- * List of Function and Service names
+ * List of Function and Service names 
  */
-typedef struct bscache_hash bscache_hash_t;
-struct bscache_hash
+typedef struct bs_svcnm_lst bs_svcnm_lst_t;
+struct bs_svcnm_lst
 {
     char svcnm[XATMI_SERVICE_NAME_LENGTH+1];
     char funcnm[128+1];
+    int is_new_funcnm;
     EX_hash_handle hh; /* makes this structure hashable        */
 };
 
@@ -57,7 +58,8 @@ struct bscache_hash
 /*------------------------------Statics---------------------------------------*/
 /*------------------------------Prototypes------------------------------------*/
 extern int ndrx_buildserver_generate_code(char *cfile, int thread_option, 
-                                          bscache_hash_t *p_bscache, 
+                                          bs_svcnm_lst_t *p_svcnm_lst, 
+                                          bs_svcnm_lst_t *p_funcnm_lst,
                                           char *p_xaswitch);
 
 extern int ndrx_compile_c(char *cfile, int compile_type);
