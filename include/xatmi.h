@@ -285,6 +285,10 @@ extern "C" {
 #define CONF_NDRX_SVPPID         "NDRX_SVPPID" 
 /** Server ID */
 #define CONF_NDRX_SVSRVID        "NDRX_SVSRVID" 
+/** Resource manager definition file - Contains Logical Names, 
+ * XA switch variable name and build dependencies
+ */
+#define CONF_NDRX_RMFILE         "NDRX_RMFILE"
 
 #define tperrno	(*_exget_tperrno_addr())
 #define tpurcode (*_exget_tpurcode_addr())

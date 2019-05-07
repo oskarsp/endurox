@@ -1,10 +1,7 @@
 /**
- * @brief Part of UBF library
- *   Utility for generating field header files.
- *   Also the usage of default `fld.tbl' is not supported, as seems to be un-needed
- *   feature.
+ * @brief 
  *
- * @file buildserver.c
+ * @file buildtms.c
  */
 /* -----------------------------------------------------------------------------
  * Enduro/X Middleware Platform for Distributed Transaction Processing
@@ -136,7 +133,8 @@ exprivate int add_listed_svcnm(char *svcnm, char *funcnm)
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        NDRX_LOG(log_error, 
+                 "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
         userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
     }
     
@@ -163,7 +161,8 @@ exprivate int add_listed_funcnm(char *funcnm)
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        NDRX_LOG(log_error, 
+                 "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
         userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
     }
     
@@ -206,7 +205,8 @@ exprivate int parse_s_string(char *p_string)
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
         if (EXSUCCEED == chk_listed_svcnm(svcnm))
         {
-            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
+            NDRX_LOG(log_debug, 
+                     "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
             goto out;
         }
         if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
@@ -245,7 +245,8 @@ exprivate int parse_s_string(char *p_string)
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
         if (EXSUCCEED == chk_listed_svcnm(svcnm))
         {
-            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
+            NDRX_LOG(log_debug, 
+                     "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
             goto out;
         }
         if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
