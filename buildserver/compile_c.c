@@ -56,7 +56,8 @@
 /*---------------------------Typedefs-----------------------------------*/
 /*---------------------------Globals------------------------------------*/
 /*---------------------------Statics------------------------------------*/
-extern int ndrx_compile_c(char *cfile, int compile_type)
+
+extern int ndrx_compile_c(char *cfile, char *f_files, char *l_files, )
 {
     int ret=EXSUCCEED;
     

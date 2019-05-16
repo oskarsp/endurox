@@ -58,10 +58,11 @@
 
 
 /**
- * Compile the code and invoke offset calculator...
+ * Generate C code for build server / build transaction manager
  * @param cfile - Auto generated buildeserver main code
  * @param thread_option - 
- * @param bs_list - list of Srevice names/Function names
+ * @param p_svcnm_lst - list of Srevice names
+ * @param p_funcnm_lst - list of Function names
  * @param p_xaswitch - to phase commit function structure (optional may be NULL)
  * @return EXSUCCEED/EXFAIL
  */
@@ -151,6 +152,52 @@ expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option,
     fprintf(f, "    };\n");
     fprintf(f, "    return( _tmstartserver( argc, argv, &tmsvrargs ));\n");
     fprintf(f, "}\n");
+
+    NDRX_FCLOSE(f);
+    f = NULL;
+
+out:
+
+    if (NULL!=f)
+    {
+        NDRX_FCLOSE(f);
+    }
+
+    return ret;
+}
+
+/**
+ * Generate build client C code
+ * @param cfile - Auto generated buildclient main code
+ * @param p_svcnm_lst - list of Srevice names
+ * @return EXSUCCEED/EXFAIL
+ */
+expublic int ndrx_buildclient_generate_code(char *cfile, char *p_xaswitch)
+{
+    int ret = EXSUCCEED;
+    FILE *f = NULL;
+    bs_svcnm_lst_t *bs, *bst;
+
+    NDRX_LOG(log_info, "C-Code to compile: [%s]", cfile);
+
+    if (NULL==(f=NDRX_FOPEN(cfile, "w")))
+    {
+        NDRX_LOG(log_error, "Failed to open for write [%s]: %s", 
+                cfile, strerror(errno));
+        EXFAIL_OUT(ret);
+    }
+
+    fprintf(f, "/* Buildclient auto-generated code */\n");
+    fprintf(f, "/*---------------------------Includes-----------------------------------*/\n");
+    fprintf(f, "#include <atmi.h>\n");
+    fprintf(f, "#include <xa.h>\n");
+    
+    fprintf(f, "extern struct xa_switch_t *%s;\n", p_xaswitch);
+
+    fprintf(f, "expublic struct tmsvrargs_t ndrx_G_tmsvrargs_stat = "
+                "{%s, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL};\n",
+                p_xaswitch);
+    fprintf(f, "expublic struct tmsvrargs_t *ndrx_G_tmsvrargs = &ndrx_G_tmsvrargs_stat;\n");
 
     NDRX_FCLOSE(f);
     f = NULL;
