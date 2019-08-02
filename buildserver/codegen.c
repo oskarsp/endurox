@@ -56,7 +56,6 @@
 /*---------------------------Statics------------------------------------*/
 /*---------------------------Prototypes---------------------------------*/
 
-
 /**
  * Generate C code for build server / build transaction manager
  * @param cfile - Auto generated buildeserver main code
@@ -66,10 +65,10 @@
  * @param p_xaswitch - to phase commit function structure (optional may be NULL)
  * @return EXSUCCEED/EXFAIL
  */
-expublic int ndrx_buildserver_generate_code(char *cfile, int thread_option, 
-                                          bs_svcnm_lst_t *p_svcnm_lst, 
-                                          bs_svcnm_lst_t *p_funcnm_lst,
-                                            char *p_xaswitch)
+expublic int ndrx_buildsrv_generate_code(char *cfile, int thread_option, 
+                                        bs_svcnm_lst_t *p_svcnm_lst, 
+                                        bs_svcnm_lst_t *p_funcnm_lst,
+                                        char *p_xaswitch)
 {
     int ret = EXSUCCEED;
     FILE *f = NULL;
@@ -212,4 +211,55 @@ out:
     return ret;
 }
 
+/**
+ * Get resource manager and libraries for xa_switch_name by rm_name
+ * @param p_xaswitch
+ * @param p_rm_lastfiles 
+ * @param p_rm_name
+ * @return EXSUCCEED/EXFAIL
+ */
+expublic int get_rm_name(char *p_xaswitch, char *p_rm_lastfiles, 
+                         char *p_rm_name)
+{
+    int ret = EXSUCCEED;
+    FILE *fp;
+    char *env_ndrx_home;
+    char *env_ndrx_rmfile;
+    char ndrx_home_rmfile[PATH_MAX]={EXEOS};
+    char *string = NULL;
+    size_t len = 0;
+
+    env_ndrx_rmfile=getenv("NDRX_RMFILE");
+
+    if ( NULL!=env_ndrx_rmfile )
+    {
+        if (NULL==(fp=NDRX_FOPEN(env_ndrx_rmfile, "r")))
+        {
+            NDRX_LOG(log_error, "Failed to open NDRX_RMFILE [%s]: %s", 
+                    env_ndrx_rmfile, strerror(errno));
+            EXFAIL_OUT(ret);
+        }
+    }
+
+    /* Close NDRX_RMFILE */
+    NDRX_FCLOSE(fp);
+    fp = NULL;
+
+    if ( NULL == p_xaswitch )
+    {
+        
+    }
+
+
+out:
+    NDRX_FCLOSE(fp);
+    fp = NULL;
+
+    if (NULL!=string)
+    {
+        NDRX_FREE(string);
+    }
+
+    return ret;
+}
 /* vim: set ts=4 sw=4 et smartindent: */

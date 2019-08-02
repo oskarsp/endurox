@@ -37,9 +37,6 @@
 /*------------------------------Externs---------------------------------------*/
 extern char ndrx_G_build_cmd[];
 /*------------------------------Macros----------------------------------------*/
-#define COMPILE_SRV     1
-#define COMPILE_CLT     2
-#define COMPILE_TMS     3
 /*------------------------------Enums-----------------------------------------*/
 /*------------------------------Typedefs--------------------------------------*/
 /**
@@ -57,11 +54,15 @@ struct bs_svcnm_lst
 /*------------------------------Globals---------------------------------------*/
 /*------------------------------Statics---------------------------------------*/
 /*------------------------------Prototypes------------------------------------*/
-extern int ndrx_buildserver_generate_code(char *cfile, int thread_option, 
-                                          bs_svcnm_lst_t *p_svcnm_lst, 
-                                          bs_svcnm_lst_t *p_funcnm_lst,
-                                          char *p_xaswitch);
+extern int ndrx_buildsrv_generate_code(char *cfile, int thread_option, 
+                                       bs_svcnm_lst_t *p_svcnm_lst, 
+                                       bs_svcnm_lst_t *p_funcnm_lst,
+                                       char *p_xaswitch);
 
-extern int ndrx_compile_c(char *cfile, int compile_type);
+extern int ndrx_compile_srv_c(char *cfile, char *f_files, 
+                              char *l_files, char *rm_libs);
+
+extern int get_rm_name(char *p_xaswitch, char *p_rm_lastfiles, char *p_rm_name);
+
 #endif /* BUILDSERVER_H_ */
 /* vim: set ts=4 sw=4 et smartindent: */

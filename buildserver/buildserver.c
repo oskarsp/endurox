@@ -45,6 +45,7 @@
 #include <atmi_int.h>
 #include <sys_unix.h>
 #include <ctype.h>
+#include <limits.h>
 
 #include <ubf.h>
 #include <ferror.h>
@@ -61,17 +62,104 @@
 /*---------------------------Typedefs-----------------------------------*/
 /*---------------------------Globals------------------------------------*/
 /*---------------------------Statics------------------------------------*/
-exprivate bs_svcnm_lst_t *M_bs_svcnm_lst = NULL; /* buildserver cache . */
-exprivate bs_svcnm_lst_t *M_bs_funcnm_lst = NULL; /* buildserver cache . */
+exprivate bs_svcnm_lst_t *M_bs_svcnm_lst = NULL;  /* buildserver cache  */
+exprivate bs_svcnm_lst_t *M_bs_funcnm_lst = NULL; /* buildserver cache  */
 
-
-exprivate int get_rm_name(char *xaswitch, char *optarg)
+/**
+ * Get resource manager and last fles for xa_switch_name by rm_name
+ * @param svcnm - Service name to check
+ * @return EXSUCCEED(found & skip)/EXFAIL
+ */
+exprivate int get_rm_name(char *p_xaswitch, 
+                          char *p_rm_lastfiles, 
+                          char *p_rm_name)
 {
     int ret = EXSUCCEED;
+    FILE *fp;
+    char *env_ndrx_home;
+    char *env_ndrx_rmfile;
+    char ndrx_home_rmfile[PATH_MAX]={EXEOS};
+    char *string = NULL;
+    size_t len = 0;
+
+    env_ndrx_rmfile=getenv("NDRX_RMFILE");
+    if ( NULL!=env_ndrx_rmfile )
+    {
+        if (NULL==(fp=NDRX_FOPEN(env_ndrx_rmfile, "r")))
+        {
+            NDRX_LOG(log_error, "Failed to open NDRX_RMFILE [%s]: %s", 
+                    env_ndrx_rmfile, strerror(errno));
+            EXFAIL_OUT(ret);
+        }
+    }
     
+    while (EXFAIL != ndrx_getline(&string, &len, fp) && NULL == p_xaswitch )
+    {
+        ndrx_str_rstrip(string," \t\n");
+        if ('#'==string[0])
+        {
+            NDRX_LOG(log_error, "Skip comment [%s]", string);
+        }
+//        else if ( EXSUCCEED!= parse_rm_string(p_xaswitch, p_rm_lastfiles, 
+//                                              string, p_rm_name) )
+//        {
+//            EXFAIL_OUT(ret);
+//        }
+    }
 
+    /* 
+     * p_xaswitch not found in NDRX_RMFILE
+     * try to get NDRX_RMFILE from $NDRX_HOME/udataobj/RM
+     */
+    if ( NULL == p_xaswitch )
+    {
+        /* Close NDRX_RMFILE */
+        NDRX_FCLOSE(fp);
+        fp = NULL;
 
+        env_ndrx_home=getenv("NDRX_HOME");
+        if ( NULL != env_ndrx_home)
+        {
+            snprintf(ndrx_home_rmfile, sizeof(ndrx_home_rmfile), 
+                                "%s/udataobj/RM", env_ndrx_home);
+            if (NULL==(fp=NDRX_FOPEN(ndrx_home_rmfile, "r")))
+            {
+                NDRX_LOG(log_error, 
+                         "Failed to open $NDRX_HOME/udataobj/RM: %s", 
+                        strerror(errno));
+                EXFAIL_OUT(ret);
+            }
+        }
+        else 
+        {
+            NDRX_LOG(log_error, "Failed to get $NDRX_HOME");
+            EXFAIL_OUT(ret);
+        }
+        while (EXFAIL != ndrx_getline(&string, &len, fp) && NULL == p_xaswitch )
+        {
+            ndrx_str_rstrip(string," \t\n");
+            if ('#'==string[0])
+            {
+                NDRX_LOG(log_error, "Skip comment [%s]", string);
+            }
+//            else if ( EXSUCCEED!= parse_rm_string(p_xaswitch, p_rm_lastfiles, 
+//                                                  string, p_rm_name) )
+//            {
+//                EXFAIL_OUT(ret);
+//            }
+        }
+    }
+    
+    
 out:
+    NDRX_FCLOSE(fp);
+    fp = NULL;
+
+    if (NULL!=string)
+    {
+        NDRX_FREE(string);
+    }
+
     return ret;
 }
 
@@ -136,7 +224,8 @@ exprivate int add_listed_svcnm(char *svcnm, char *funcnm)
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        NDRX_LOG(log_error, 
+                 "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
         userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
     }
     
@@ -163,7 +252,8 @@ exprivate int add_listed_funcnm(char *funcnm)
     
     if (NULL==ret)
     {
-        NDRX_LOG(log_error, "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
+        NDRX_LOG(log_error, 
+                 "Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
         userlog("Failed to alloc bs_svcnm_lst_t: %s", strerror(errno));
     }
     
@@ -202,17 +292,7 @@ exprivate int parse_s_string(char *p_string)
     /* In case when not provided SVCNM */
     if (NULL != f && 0==strcmp(f+1,p))
     {
-        NDRX_STRCPY_SAFE(svcnm, funcnm);
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
-        if (EXSUCCEED == chk_listed_svcnm(svcnm))
-        {
-            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
-            goto out;
-        }
-        if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
-        {
-            EXFAIL_OUT(ret);
-        }
         if (EXSUCCEED != chk_listed_funcnm(funcnm))
         {
             if (EXSUCCEED!=add_listed_funcnm(funcnm))
@@ -245,7 +325,8 @@ exprivate int parse_s_string(char *p_string)
         NDRX_LOG(log_debug, "SVCNM=[%s] FUNCNM=[%s]\n", svcnm, funcnm);
         if (EXSUCCEED == chk_listed_svcnm(svcnm))
         {
-            NDRX_LOG(log_debug, "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
+            NDRX_LOG(log_debug, 
+                     "Warning svcnm=[%s] already exist SKIP!!!", svcnm);
             goto out;
         }
         if (EXSUCCEED!=add_listed_svcnm(svcnm, funcnm))
@@ -290,7 +371,6 @@ exprivate int parse_s_file(char *infile)
     while (EXFAIL != ndrx_getline(&string, &len, fp))
     {
         ndrx_str_rstrip(string," \t\n");
-NDRX_LOG(log_error, "Parse string [%s] len=[%d]", string, (int)len);
         if ('#'==string[0])
         {
             NDRX_LOG(log_error, "Skip comment [%s]", string);
@@ -325,7 +405,6 @@ int main(int argc, char **argv)
     char ofile[PATH_MAX+1]="SERVER";
     char cfile[PATH_MAX+1]="ndrx_bs_XXXXXX.c";
     FILE *f=NULL;
-    char *env_cc, *env_cflags, *env_ndrx_home;
     char ndrx_lib[PATH_MAX+1]={EXEOS};
     char ndrx_inc[PATH_MAX+1]={EXEOS};
     char *s_value=NULL;
@@ -338,6 +417,7 @@ int main(int argc, char **argv)
     char firstfiles[PATH_MAX+1];
     char lastfiles[PATH_MAX+1];
     char *xaswitch=NULL;
+    char *rm_lastfiles=NULL;
     
     NDRX_BANNER;
     
@@ -386,13 +466,10 @@ int main(int argc, char **argv)
                 break;
             case 'r':
             case 'g':
-                /*NDRX_LOG(log_error, "ERROR! Please use tmsrv with corresponding "
-                    "shared libraries! No need to build resource manager.");
-                EXFAIL_OUT(ret);*/
-                if ( EXSUCCEED != get_rm_name(xaswitch, optarg) )
+                if ( EXSUCCEED != get_rm_name(xaswitch, rm_lastfiles, optarg) )
                 {
                         NDRX_LOG(log_warn, 
-                             "Failed to {parse Service(s)/Function from value ", 
+                             "Failed to parse Service(s)/Function from value ", 
                              s_value);
                         EXFAIL_OUT(ret);
                 }
@@ -424,9 +501,10 @@ int main(int argc, char **argv)
             EXFAIL_OUT(ret);
         }
         
-        if (EXSUCCEED!=ndrx_buildserver_generate_code(cfile, thread_option, 
-                                                      M_bs_svcnm_lst, M_bs_funcnm_lst,
-                                                      xaswitch))
+        if (EXSUCCEED!=ndrx_buildsrv_generate_code(cfile, thread_option, 
+                                                   M_bs_svcnm_lst, 
+                                                   M_bs_funcnm_lst,
+                                                   xaswitch))
         {
             NDRX_LOG(log_error, "Failed to generate code!");
             EXFAIL_OUT(ret);
@@ -435,10 +513,10 @@ int main(int argc, char **argv)
     
     if (HDR_C_LANG==lang_mode)
     {
-        if (EXSUCCEED!=ndrx_compile_c(cfile, COMPILE_SRV))
-        {
-            EXFAIL_OUT(ret);
-        }
+//        if (EXSUCCEED!=ndrx_compile_c(cfile, COMPILE_SRV))
+//        {
+//            EXFAIL_OUT(ret);
+//        }
     }
 
 out:

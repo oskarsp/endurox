@@ -57,10 +57,11 @@
 /*---------------------------Globals------------------------------------*/
 /*---------------------------Statics------------------------------------*/
 
-extern int ndrx_compile_c(char *cfile, char *f_files, char *l_files, )
+extern int ndrx_compile_srv_c(char *cfile, char *f_files, char *l_files, char *rm_libs)
 {
     int ret=EXSUCCEED;
-    
+    char *env_cc, *env_cflags, *env_ndrx_home;
+
 
 #if 0
     env_cc = getenv("CC");
